@@ -13,27 +13,32 @@
                 <x-input wire:model="nombre" type="text" class="w-full" />
                 <x-input-error for="nombre" />
             </div>
-
             <div class="mb-4">
-                <x-label value="estado:" />
-                <x-input wire:model="estado" type="text" class="w-full" />
-                <x-input-error for="estado" />
-            </div>
-
-            <div class="mb-4">
-                <x-label value="apellido:" />
+                <x-label value="Apellido:" />
                 <x-input wire:model="apellido" type="text" class="w-full" />
                 <x-input-error for="apellido" />
             </div>
-        
             <div class="mb-4">
-                <x-label value="genero:" />
-                <x-input wire:model="genero" type="text" class="w-full" />
-                <x-input-error for="genero" />
+                <x-label value="Dni:" />
+                <x-input wire:model="dni" type="text" class="w-full" />
+                <x-input-error for="dni" />
             </div>
+            <div class="mb-4">
+                <x-label value="Género:" for="genero"/>
+                <select wire:model="genero" class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full ">
+                    <option value="">Selecciona un género</option>
+                    @foreach ($opcionesGenero as $opcion)
+                        <option value="{{ $opcion }}">{{ $opcion }}</option>
+                    @endforeach
+                </select>
+                @error('genero') <span class="text-red-500">{{ $message }}</span> @enderror
+            </div>           
+            <div class="mb-4">
+                <x-label value="Estado:" />
+                <x-input wire:model="estado" type="text" class="w-full" />
+                <x-input-error for="estado" />
+            </div>          
         </x-slot>
-
-
         <x-slot name="footer">
             <x-secondary-button wire:click="resetForm" class="mx-2">
                 Cancelar

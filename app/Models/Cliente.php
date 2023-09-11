@@ -10,6 +10,6 @@ class Cliente extends Model
     use HasFactory;
     protected $table = 'clientes';
     public $fillable = [
-        'nombre','apellido','genero','estado',
+        'nombre','apellido','dni','genero','estado',
     ];
 }
