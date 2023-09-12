@@ -48,44 +48,33 @@
 
     @livewireScripts
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
 
-    <script>
+   <!-- <script>
         Livewire.on('alert', function(message) {
+            console.log(message);
             Swal.fire(
                 'Good job!',
-                message,
+                message[0],
                 'success'
             )
-        })
+        })  
+    </script>-->
+
+    @stack('js')
+    
+    <script>
+        Livewire.on('CustomAlert', function(params) {
+            console.log(params);
+            Swal.fire(
+                params[0]["titulo"],
+                params[0]["mensaje"],
+                params[0]["icono"],
+            )
+        });
     </script>
 
-    <script>
-        Livewire.on('delete', id => {
-           Swal.fire({
-               title: '¿Estas seguro que deseas eliminar al cliente?',
-               text: "Esta acción no se puede revertir",
-               icon: 'warning',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Borrar',
-               cancelButtonText: 'Cancelar'
-           }).then((result) => {
-               if (result.isConfirmed) {
-                   
-                   Livewire.dispatch('clientes', 'destroy', id);
-                   Swal.fire(
-                       'Eliminado',
-                       'El cliente ha sido eliminado',
-                       'success'
-                   )
-               }
-           })
-       });
-       
-   </script>
+   
 
 
 </body>

@@ -18,6 +18,7 @@ class Clientes extends Component
     public $clienteid;
     use WithPagination;
     #[On('render')]
+    
 
     public function render()
     {
@@ -31,8 +32,18 @@ class Clientes extends Component
     }
     public function delete($id)
     {
-        Cliente::find($id)->delete();
-        $this->dispatch('delete');
+       // Cliente::find($id)->delete();
+        $this->dispatch('delete', json_encode($id) );
+    }
+
+    #[On('destroy')] 
+    public function destroy($kate)
+
+    {
+        //dd($kate);
+       Cliente::find($kate)->delete();
+       $this->dispatch('render');
+       
     }
 
     public function edit($id)

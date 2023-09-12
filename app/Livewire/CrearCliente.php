@@ -17,8 +17,7 @@ class CrearCliente extends Component
         'estado'=> 'required' ,
         'apellido'=> 'required' ,
         'dni'=>'required',
-        'genero' => 'required',
-        
+        'genero' => 'required',        
     ];
 
     public function render()
@@ -41,7 +40,7 @@ class CrearCliente extends Component
         
         $this->reset(['open', 'nombre', 'apellido', 'dni', 'genero', 'estado']);
         $this->dispatch('render');
-        $this->dispatch('alert');
+        $this->dispatch('CustomAlert',['titulo'=>'Bien Hecho','mensaje'=>'El cliente se creo satisfactoriamente','icono'=>'success']);
         
     }  
 
