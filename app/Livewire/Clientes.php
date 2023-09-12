@@ -38,7 +38,6 @@ class Clientes extends Component
 
     #[On('destroy')] 
     public function destroy($kate)
-
     {
         //dd($kate);
        Cliente::find($kate)->delete();
