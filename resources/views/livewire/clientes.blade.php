@@ -10,7 +10,7 @@
             <table class="w-full whitespace-nowrap">
                 <thead class="bg-slate-600 border-b font-bold text-white">
                     <tr>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">ID
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">#
                         </th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Nombre
                         </th>
@@ -36,55 +36,51 @@
                             class="focus:outline-none h-16 border border-slate-300 rounded hover:bg-gray-200">
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
+                                    <p
                                         class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
                                         {{ $cliente['id'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
-                                        class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
                                         {{ $cliente['nombre'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
-                                        class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
                                         {{ $cliente['apellido'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
-                                        class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                    <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
                                         {{ $cliente['dni'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
-                                        class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                    <p class="text-sm font-semibold  text-gray-600 p-1 bg-orange-100 rounded-full">
                                         {{ $cliente['genero'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
-                                    <div
+                                    <p
                                         class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
                                         {{ $cliente['estado'] }}
-                                    </div>
+                                    </p>
                                 </div>
                             </td>
                             <td>
                                 <div class="flex space-x-2">
-                                 
+
                                     <button wire:click="edit({{ $cliente->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-lime-300 font-bold text-white cursor-pointer hover:bg-lime-400 hover:animate-pulse">
                                         <i class="fas fa-edit"></i>
@@ -137,7 +133,8 @@
             </div>
             <div class="mb-4">
                 <x-label value="Género:" />
-                <select wire:model="genero" class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full">
+                <select wire:model="genero"
+                    class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full">
                     <option value="">Selecciona un género</option>
                     @foreach ($opcionesGenero as $opcion)
                         <option value="{{ $opcion }}">{{ $opcion }}</option>
@@ -149,7 +146,7 @@
                 <x-label value="Estado:" />
                 <x-input wire:model="estado" type="text" class="w-full" />
                 <x-input-error for="estado" />
-            </div>         
+            </div>
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('editando',false)" class="mx-2">
@@ -162,35 +159,33 @@
     </x-dialog-modal>
 
     @push('js')
-    <script>
-        Livewire.on('delete', id => {
-            console.log(id);
-           Swal.fire({
-               title: '¿Estas seguro que deseas eliminar al cliente?',
-               text: "Esta acción no se puede revertir",
-               icon: 'warning',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Borrar',
-               cancelButtonText: 'Cancelar'
-               
-           }).then((result) => {
-               if (result.isConfirmed) {
-                   Livewire.dispatch('destroy', { kate: id[0] });
-                   Swal.fire(
-                       'Eliminado',
-                       'El cliente ha sido eliminado',
-                       'success'
-                   )
-               }
-           })
-       });
-       
-   </script>
-   @endpush 
-    
+        <script>
+            Livewire.on('delete', id => {
+                console.log(id);
+                Swal.fire({
+                    title: '¿Estas seguro que deseas eliminar al cliente?',
+                    text: "Esta acción no se puede revertir",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Borrar',
+                    cancelButtonText: 'Cancelar'
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('destroy', {
+                            kate: id[0]
+                        });
+                        Swal.fire(
+                            'Eliminado',
+                            'El cliente ha sido eliminado',
+                            'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
+
 </div>
-
-
-

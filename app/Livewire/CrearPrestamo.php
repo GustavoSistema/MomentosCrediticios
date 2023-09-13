@@ -26,17 +26,17 @@ class CrearPrestamo extends Component
     public $calculosRealizados = false;
 
     protected $rules = [
-            'clienteDni' => 'required',
-            'clienteNombres' => 'required',
-            'producto' => 'required',
-            'monto' => 'required',
-            'interes' => 'required',
-            'cuotas' => 'required',
-            'fpago' => 'required',
-            'fecha' => 'required', 
-            'vcuota' => 'required',      
-            'vinteres' => 'required',      
-            'mtotal' => 'required',      
+        'clienteDni' => 'required',
+        'clienteNombres' => 'required',
+        'producto' => 'required',
+        'monto' => 'required',
+        'interes' => 'required',
+        'cuotas' => 'required',
+        'fpago' => 'required',
+        'fecha' => 'required',
+        'vcuota' => 'required',
+        'vinteres' => 'required',
+        'mtotal' => 'required',
 
     ];
 
@@ -69,25 +69,27 @@ class CrearPrestamo extends Component
             'fpago' => 'required',
             'fecha' => 'required|date',
         ]);
-        // Conversión de la tasa de interés a decimal (ejemplo: 5% -> 0.05)
-        $tasaInteres = $this->interes / 100;
-        // Cálculo de la cuota
+        // Obtener los valores de entrada
         $montoPrestamo = $this->monto;
-        $numeroCuotas = $this->cuotas;
-        $tasaInteresMensual = $tasaInteres / 12;
-        $cuota = ($montoPrestamo * $tasaInteresMensual) / (1 - pow(1 + $tasaInteresMensual, -$numeroCuotas));
-        // Cálculo del valor de interés total
-        $valorInteresTotal = ($cuota * $numeroCuotas) - $montoPrestamo;
-        // Cálculo del monto total
-        $montoTotal = $montoPrestamo + $valorInteresTotal;
+        $tasaInteres = $this->interes;
+        $numeroCuotas = $this->cuotas;        
+
+        // Calcular el valor de interés
+        $valorInteres = ($montoPrestamo * ($tasaInteres / 100));
+        // Calcular el valor de la cuota
+        $cuota = ($montoPrestamo / $numeroCuotas) + $valorInteres / $numeroCuotas;
+        // Calcular el monto total
+        $montoTotal = $montoPrestamo + $valorInteres;
         // Redondear los resultados a 2 decimales
         $cuota = number_format($cuota, 2);
-        $valorInteresTotal = number_format($valorInteresTotal, 2);
+        $valorInteres = number_format($valorInteres, 2);
         $montoTotal = number_format($montoTotal, 2);
-        // Actualización de las propiedades con los resultados
+
+        // Actualizar las propiedades con los resultados
         $this->vcuota = $cuota;
-        $this->vinteres = $valorInteresTotal;
+        $this->vinteres = $valorInteres;
         $this->mtotal = $montoTotal;
+
         // Marcar los cálculos como realizados
         $this->calculosRealizados = true;
     }
@@ -115,8 +117,8 @@ class CrearPrestamo extends Component
             'cuotas' => $this->cuotas,
             'fpago' => $this->fpago,
             'fecha' => $this->fecha,
-            'vcuota' => $this->vcuota,     
-            'vinteres' => $this->vinteres,    
+            'vcuota' => $this->vcuota,
+            'vinteres' => $this->vinteres,
             'mtotal' => $this->mtotal,
             // Otros campos del préstamo si los tienes
         ]);

@@ -12,17 +12,19 @@
                 <thead class="bg-slate-600 border-b font-bold text-white">
                     <tr>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            #</th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Cliente</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Producto</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Monto</th>
+                            Monto Credito</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Interés</th>
+                            Monto Interés</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Cuotas</th>
+                            Monto Total</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Método de Pago</th>
+                            Método</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Fecha</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
@@ -37,20 +39,63 @@
                                 <div class="flex items-center">
                                     <div
                                         class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
-                                        {{ $prestamo->cliente->nombre }} <!-- {{ $prestamo->cliente->apellido }} -->
+                                        {{ $prestamo->id }}
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $prestamo->producto }}</td>
-                            <td>{{ $prestamo->monto }}</td>
-                            <td>{{ $prestamo->interes }}</td>
-                            <td>{{ $prestamo->cuotas }}</td>
-                            <td>{{ $prestamo->fpago }}</td>
-                            <td>{{ $prestamo->fecha }}</td>
-                            <td>
-                                <div class="flex space-x-2">
-                                    <!-- Agrega aquí los botones de acciones -->
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                        {{ $prestamo->cliente->nombre }} {{ $prestamo->cliente->apellido }}
+                                    </p>
                                 </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
+                                        {{ $prestamo->producto }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                        {{ $prestamo->monto }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                        {{ $prestamo->vinteres }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
+                                        {{ $prestamo->mtotal }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-semibold  text-gray-600 p-1 bg-orange-100 rounded-full">
+                                        {{ $prestamo->fpago }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                        {{ $prestamo->fecha }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-2">
+                                <p class="relative px-5 text-center">
+                                    <!-- Agrega aquí los botones de acciones -->
+                                </p>
                             </td>
                         </tr>
                     @endforeach
