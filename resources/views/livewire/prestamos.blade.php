@@ -49,11 +49,11 @@
                                         {{ $prestamo->cliente->nombre }} {{ $prestamo->cliente->apellido }}
                                     </p>
                                 </div>
-                            </td>
+                            </td>                            
                             <td class="pl-2">
                                 <div class="flex items-center">
                                     <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
-                                        {{ $prestamo->producto }}
+                                        {{ $prestamo->producto->nombre }}
                                     </p>
                                 </div>
                             </td>
@@ -77,11 +77,11 @@
                                         {{ $prestamo->mtotal }}
                                     </p>
                                 </div>
-                            </td>
+                            </td>                            
                             <td class="pl-2">
                                 <div class="flex items-center">
                                     <p class="text-sm font-semibold  text-gray-600 p-1 bg-orange-100 rounded-full">
-                                        {{ $prestamo->fpago }}
+                                        {{ $prestamo->formaPago->nombre }}
                                     </p>
                                 </div>
                             </td>

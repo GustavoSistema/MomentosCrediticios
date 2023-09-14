@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Clientes;
+use App\Livewire\Cobranzas;
 use App\Livewire\Prestamos;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,6 @@ Route::middleware([
 
     Route::get('/clientes', Clientes::class)->name('clientes');
     Route::get('/prestamos', Prestamos::class)->name('prestamos');
+    Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
 });
 
