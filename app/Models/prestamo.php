@@ -25,4 +25,7 @@ class prestamo extends Model
     {
         return $this->belongsTo(FormaPago::class, 'idfPago');
     }
+    protected $casts = [
+        'cuotas' => 'json',
+    ];
 }

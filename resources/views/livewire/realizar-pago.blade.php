@@ -1,6 +1,6 @@
 <div>
     <button wire:click="$set('open',true)" class="bg-indigo-500 text-white py-2 px-4 rounded-md shadow-md">
-         Realizar Pago
+        Realizar Pago
     </button>
     <x-dialog-modal wire:model="open" wire:loading.attr="disabled">
         <x-slot name="title" class="font-bold">
@@ -16,14 +16,84 @@
                 </button>
                 <x-input-error for="dni" />
             </div>
-             <!-- Datos del Cliente -->
+            <!-- Datos del Cliente -->
             @if ($clienteEncontrado)
-                <p>Nombre Completo: {{ $clienteNombres }}</p>
-                <p>Monto: {{ $monto }}</p>
-                <p>Forma de Pago: {{ $formaPago }}</p>
-                <p>Monto Total: {{ $mtotal }}</p>
-                <p># Cuotas: {{ $cuotas }}</p>                
-                <p>Valor * Cuota: {{ $vcuota }}</p>
+                <div class="flex space-x-4">
+                    <div class="w-1/3">
+                        <x-label for="clienteNombres" value="Nombre Completo:" />
+                        <x-input wire:model="clienteNombres" type="text" id="clienteNombres" class="w-full" />
+                    </div>
+                    <div class="w-1/3">
+                        <x-label for="producto" value="Producto:" />
+                        <x-input wire:model="producto" type="text" id="producto" class="w-full" />
+                    </div>
+                    <div class="w-1/3">
+                        <x-label for="formaPago" value="Forma de Pago:" />
+                        <x-input wire:model="formaPago" type="text" id="formaPago" class="w-full" />
+                    </div>
+                </div>
+                <div class="mb-4 flex">
+                    <div class="w-1/4">
+                        <x-label for="monto" value="Monto Prestado:" />
+                        <x-input wire:model="monto" type="text" id="monto" class="w-full" />
+                    </div>
+                    <div class="w-1/4">
+                        <x-label for="cuotas" value="Nª Cuotas:" />
+                        <x-input wire:model="cuotas" type="text" id="cuotas" class="w-full" />
+                    </div>
+                    <div class="w-1/4">
+                        <x-label for="vcuota" value="Pago x Cuota:" />
+                        <x-input wire:model="vcuota" type="text" id="vcuota" class="w-full" />
+                    </div>
+                    <div class="w-1/4">
+                        <x-label for="mtotal" value="Total:" />
+                        <x-input wire:model="mtotal" type="text" id="mtotal" class="w-full" />
+                    </div>
+                </div>
+            @endif
+            @php
+                $totalPrestamo = $mtotal; // Usar el monto total del préstamo
+                $numCuotas = $cuotas; // Usar el número de c    uotas
+                $valorCuota = $vcuota; // Usar el valor de cuota
+                $fechaInicio = Carbon\Carbon::parse($fechapago); // Usar la fecha de inicio del préstamo
+                $formaPago = $formaPago; // Usar la forma de pago (Diario, Semanal, Quincenal)
+            @endphp
+            @if ($clienteEncontrado)
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th><button type="button" class="btn btn-link check-all">Seleccionar todos</button></th>
+                            <th>Cuota</th>
+                            <th>Fecha de Pago</th>
+                            <th>Pago x Cuota</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for ($i = 1; $i <= $numCuotas; $i++)
+                            <tr>
+                                <td><input wire:model="seleccionarCuota.{{ $i }}" type="checkbox"></td>
+                                <td>{{ $i }}</td>
+                                <td>{{ $fechaInicio->format('Y-m-d') }}</td>
+                                <td>{{ $vcuota }}</td>
+                                <td>
+                                    <select wire:model="estados.{{ $i }}">
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            @if ($formaPago === 'Diario')
+                                {{ $fechaInicio->addDay() }}
+                            @elseif ($formaPago === 'Semanal')
+                                {{ $fechaInicio->addWeek() }}
+                            @elseif ($formaPago === 'Quincenal')
+                                {{ $fechaInicio->addWeeks(2) }}
+                            @endif
+                        @endfor
+                    </tbody>
+                </table>
             @endif
 
         </x-slot>

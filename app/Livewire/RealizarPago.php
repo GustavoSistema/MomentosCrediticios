@@ -14,11 +14,12 @@ class RealizarPago extends Component
     public $clienteNombres;
     public $monto;
     public $formaPago;
+    public $producto;
     public $cuotas = [];
     public $seleccionarCuota = [];
-    public $numeroCuotas = 0;
     public $mtotal;
-    public$vcuota;
+    public $vcuota;
+    public $fechapago;
 
 
     public function render()
@@ -53,11 +54,15 @@ class RealizarPago extends Component
                 // Obtener la forma de pago
                 $formaPago = $prestamo->formaPago;
                 $this->formaPago = $formaPago->nombre; 
+                //Obtener el produtco
+                $producto = $prestamo->producto;
+                $this->producto = $producto->nombre;
                 // También puedes calcular el monto total aquí si es necesario
                 $this->mtotal = $prestamo->mtotal;
                 $this->vcuota = $prestamo->vcuota;
                 // Obtener las cuotas si es necesario
-                $this->cuotas = $prestamo->cuotas;
+                
+                $this->cuotas = json_decode($prestamo->cuotas, true);
             }
 
             $this->clienteEncontrado = true;
@@ -66,12 +71,8 @@ class RealizarPago extends Component
             $this->clienteEncontrado = false;
         }
     }
+   
 
-    public function actualizarSeleccion()
-    {
-        // Actualizar la selección de cuotas
-        // ...
-    }
     public function registrarPago()
     {
         // Lógica para registrar el pago
