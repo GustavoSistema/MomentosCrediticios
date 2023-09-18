@@ -37,14 +37,14 @@
 
             <!-- Formulario de Préstamo -->
             <div class="mb-4">
-                <x-label value="Producto:" for="producto"/>
-                <select wire:model="producto" class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full ">
-                    <option value="">Selecciona un Producto</option>
-                    @foreach ($opcionesProducto as $opcion)
-                        <option value="{{ $opcion }}">{{ $opcion }}</option>
+                <x-label for="producto" value="Producto:"/>
+                <select wire:model="productoId" class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full" id="producto">
+                    <option value="">Seleccione un producto</option>
+                    @foreach($productos as $producto)
+                        <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
                     @endforeach
                 </select>
-                @error('genero') <span class="text-red-500">{{ $message }}</span> @enderror
+                @error('productoId') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mb-4">
                 <x-label for="monto" value="Monto del Producto:" />
@@ -56,11 +56,17 @@
             </div>
             <div class="mb-4">
                 <x-label for="cuotas" value="Número de Cuotas:" />
-                <x-input wire:model="cuotas" type="text" id="cuotas" class="w-full" />
+                <x-input wire:model="cuotas" type="number" id="cuotas" class="w-full" />
             </div>
             <div class="mb-4">
-                <x-label for="fpago" value="Forma de Pago:" />
-                <x-input wire:model="fpago" type="text" id="fpago" class="w-full" />
+                <x-label for="formaPago" value="Forma de Pago:"/>
+                <select wire:model="formaPago" class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 block w-full" id="formaPago">
+                    <option value="">Seleccione una forma de pago</option>
+                    @foreach($formasPago as $formaPago)
+                        <option value="{{ $formaPago->id }}">{{ $formaPago->nombre }}</option>
+                    @endforeach
+                </select>
+                @error('formaPago') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="mb-4">
                 <x-label for="fecha" value="Fecha de Inicio:" />

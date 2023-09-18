@@ -19,24 +19,32 @@
             <!-- Datos del Cliente -->
             @if ($clienteEncontrado)
                 <div class="flex space-x-4">
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                         <x-label for="clienteNombres" value="Nombre Completo:" />
-                        <x-input wire:model="clienteNombres" type="text" id="clienteNombres" class="w-full" />
+                        <x-input wire:model="clienteNombres" type="text" id="clienteNombres" class="w-full"
+                            readonly />
                     </div>
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                         <x-label for="producto" value="Producto:" />
-                        <x-input wire:model="producto" type="text" id="producto" class="w-full" />
+                        <x-input wire:model="producto" type="text" id="producto" class="w-full" readonly />
                     </div>
+                    <!--
                     <div class="w-1/3">
                         <x-label for="formaPago" value="Forma de Pago:" />
                         <x-input wire:model="formaPago" type="text" id="formaPago" class="w-full" />
                     </div>
+                    -->
                 </div>
                 <div class="mb-4 flex">
-                    <div class="w-1/4">
-                        <x-label for="monto" value="Monto Prestado:" />
-                        <x-input wire:model="monto" type="text" id="monto" class="w-full" />
+                    <div class="w-1/3">
+                        <x-label for="formaPago" value="Forma de Pago:" />
+                        <x-input wire:model="formaPago" type="text" id="formaPago" class="w-full" readonly />
                     </div>
+                    <div class="w-1/3">
+                        <x-label for="monto" value="Monto Prestado:" />
+                        <x-input wire:model="monto" type="text" id="monto" class="w-full" readonly />
+                    </div>
+                    <!--
                     <div class="w-1/4">
                         <x-label for="cuotas" value="Nª Cuotas:" />
                         <x-input wire:model="cuotas" type="text" id="cuotas" class="w-full" />
@@ -45,57 +53,102 @@
                         <x-label for="vcuota" value="Pago x Cuota:" />
                         <x-input wire:model="vcuota" type="text" id="vcuota" class="w-full" />
                     </div>
-                    <div class="w-1/4">
+                    -->
+                    <div class="w-1/3">
                         <x-label for="mtotal" value="Total:" />
-                        <x-input wire:model="mtotal" type="text" id="mtotal" class="w-full" />
+                        <x-input wire:model="mtotal" type="text" id="mtotal" class="w-full" readonly />
                     </div>
                 </div>
-            @endif
-            @php
-                $totalPrestamo = $mtotal; // Usar el monto total del préstamo
-                $numCuotas = $cuotas; // Usar el número de c    uotas
-                $valorCuota = $vcuota; // Usar el valor de cuota
-                $fechaInicio = Carbon\Carbon::parse($fechapago); // Usar la fecha de inicio del préstamo
-                $formaPago = $formaPago; // Usar la forma de pago (Diario, Semanal, Quincenal)
-            @endphp
-            @if ($clienteEncontrado)
-                <table class="w-full">
-                    <thead>
-                        <tr>
-                            <th><button type="button" class="btn btn-link check-all">Seleccionar todos</button></th>
-                            <th>Cuota</th>
-                            <th>Fecha de Pago</th>
-                            <th>Pago x Cuota</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        @for ($i = 1; $i <= $numCuotas; $i++)
+                @if ($clienteEncontrado)
+                    <table class="w-full whitespace-nowrap">
+                        <thead class="bg-slate-600 border-b font-bold text-white">
                             <tr>
-                                <td><input wire:model="seleccionarCuota.{{ $i }}" type="checkbox"></td>
-                                <td>{{ $i }}</td>
-                                <td>{{ $fechaInicio->format('Y-m-d') }}</td>
-                                <td>{{ $vcuota }}</td>
-                                <td>
-                                    <select wire:model="estados.{{ $i }}">
-                                        <option value="Pendiente">Pendiente</option>
-                                        <option value="Cancelado">Cancelado</option>
-                                    </select>
-                                </td>
+                                <th scope="col"
+                                    class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">#</button>
+                                </th>
+                                <th scope="col"
+                                    class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Cuota</th>
+                                <th scope="col"
+                                    class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Fecha de
+                                    Pago</th>
+                                <th scope="col"
+                                    class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Pago x
+                                    Cuota</th>
+                                <th scope="col"
+                                    class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Estado</th>
                             </tr>
-                            @if ($formaPago === 'Diario')
-                                {{ $fechaInicio->addDay() }}
-                            @elseif ($formaPago === 'Semanal')
-                                {{ $fechaInicio->addWeek() }}
-                            @elseif ($formaPago === 'Quincenal')
-                                {{ $fechaInicio->addWeeks(2) }}
-                            @endif
-                        @endfor
-                    </tbody>
-                </table>
-            @endif
+                        </thead>
+                        <tbody>
+                            @php
+                                $fechaIteracion = clone $this->fechaInicioCuota; // Clonar la fecha original
+                            @endphp
+                            @for ($i = 1; $i <= $this->cuotas; $i++)
+                                <tr>
+                                    <td class="pl-2">
+                                        <div class="flex items-center #omente_center">
+                                            <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                                <input wire:model="seleccionarCuota.{{ $i }}"
+                                                    value="{{ $i }}" type="checkbox"
+                                                    wire:change="calcularTotal({{ $this->vcuota }})">
 
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="pl-2">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                                {{ $i }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="pl-2">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                                @if ($this->formaPago === 'Diario')
+                                                    {{ $fechaIteracion->addDay()->toDateString() }}
+                                                @elseif ($this->formaPago === 'Semanal')
+                                                    {{ $fechaIteracion->addWeek()->toDateString() }}
+                                                @elseif ($this->formaPago === 'Quincenal')
+                                                    {{ $fechaIteracion->addDay(15)->toDateString() }}
+                                                @elseif ($this->formaPago === 'Mensual')
+                                                    {{ $fechaIteracion->addMonthsNoOverflow()->toDateString() }}
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="pl-2">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                                {{ $this->vcuota }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="pl-2">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                                <select wire:model="estado.{{ $i }}">
+                                                    <option value="Pendiente"
+                                                        @if ($this->estado[$i] === 'Pendiente') selected @endif>Pendiente
+                                                    </option>
+                                                    <option value="Cancelado"
+                                                        @if ($this->estado[$i] === 'Cancelado') selected @endif>Cancelado
+                                                    </option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                    <div class="w-full">
+                        <x-label for="totalAPagar" value="Total a Pagar:" />
+                        <x-input wire:model="totalAPagar" type="text" id="totalAPagar" class="w-full" readonly />
+                    </div>
+                @endif
+
+            @endif
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="resetForm" class="mx-2">
