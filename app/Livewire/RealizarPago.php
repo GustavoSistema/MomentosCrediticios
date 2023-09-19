@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class RealizarPago extends Component
 {
-    public $open = true;
+    public $open = false;
     public $dni;
     public $clienteEncontrado = false;
     public $clienteNombres;

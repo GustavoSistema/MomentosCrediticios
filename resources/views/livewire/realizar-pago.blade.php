@@ -156,7 +156,7 @@
             </x-secondary-button>
             <x-button wire:click="registrarPago" wire:loading.attr="disabled" wire:target="registrarPago"
                 class="bg-indigo-500 text-white py-2 px-4 rounded-md shadow-md">
-                Guardar
+                Realizar Pago
             </x-button>
         </x-slot>
     </x-dialog-modal>

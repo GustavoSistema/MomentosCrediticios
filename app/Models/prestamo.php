@@ -25,6 +25,10 @@ class prestamo extends Model
     {
         return $this->belongsTo(FormaPago::class, 'idfPago');
     }
+    public function cobranzas()
+    {
+        return $this->hasMany(Cobranza::class, 'idPrestamos');
+    }
     protected $casts = [
         'cuotas' => 'json',
     ];
