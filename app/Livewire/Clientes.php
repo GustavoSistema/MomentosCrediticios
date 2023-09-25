@@ -51,7 +51,7 @@ class Clientes extends Component
         $cliente = Cliente::find($id);
         
         if ($cliente) {
-            $this->clienteid = $cliente->id; // Configura el ID del cliente que se está editando
+            $this->clienteid = $cliente->id; // Configura el ID del cliente que se está edita
             $this->nombre = $cliente->nombre;
             $this->apellido = $cliente->apellido;
             $this->dni = $cliente->dni;

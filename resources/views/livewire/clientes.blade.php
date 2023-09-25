@@ -81,14 +81,14 @@
                             <td>
                                 <div class="flex space-x-2">
 
-                                    <button wire:click="edit({{ $cliente->id }})"
+                                    <a wire:click="edit({{ $cliente->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-lime-300 font-bold text-white cursor-pointer hover:bg-lime-400 hover:animate-pulse">
                                         <i class="fas fa-edit"></i>
                                         <span
                                             class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
                                             Editar
                                         </span>
-                                    </button>
+                                    </a>
 
                                     <a wire:click="delete({{ $cliente->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse">
@@ -97,7 +97,6 @@
                                             class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
                                             Eliminar
                                         </span>
-
                                     </a>
                                 </div>
                             </td>
