@@ -21,6 +21,7 @@ class CrearEvaluacion extends Component
     public $borradocumento;
     public $estado;
     public $estados = ['Por Revisar', 'Revisado', 'Observado'];
+    public $documentos = [];
     use WithFileUploads;
 
 
@@ -37,7 +38,7 @@ class CrearEvaluacion extends Component
         'celular' => 'required|max:9',
         'email' => 'required',
         'fecha' => 'required|date',
-        'documento' => 'required',
+        'documentos.*' => 'required|file|mimes:pdf,docx|max:10240',
     ];
 
     public function mount()
@@ -54,7 +55,11 @@ class CrearEvaluacion extends Component
     public function crearEvaluacion()
     {
         $this->validate();
-        $documento = $this->documento->store('evaluacion', 'public');
+        $documentoPaths = [];
+        foreach ($this->documentos as $documento) {
+            $documentoPath = $documento->store('temp', 'public');
+            $documentoPaths[] = $documentoPath;
+        }
         Evalua::create([
             'idTaller' => $this->taller,
             'nomcliente' => $this->nomcliente,
@@ -63,11 +68,12 @@ class CrearEvaluacion extends Component
             'celular' => $this->celular,
             'email' => $this->email,
             'fecha' => $this->fecha,
-            'documento' => $this->documento,
+            'documentos' => json_encode($documentoPaths),
             'estado' => 'Por Revisar',
 
         ]);
         $this->resetForm();
+        $this->documentos = [];
         $this->dispatch('render');
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'La evaluacion se envio correctamente', 'icono' => 'success']);
         $this->borradocumento = rand();
@@ -83,6 +89,6 @@ class CrearEvaluacion extends Component
         $this->celular = '';
         $this->email = '';
         $this->fecha = '';
-        $this->documento = null;
+        $this->borradocumento = null;
     }
 }

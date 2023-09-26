@@ -8,7 +8,6 @@
         </x-slot>
 
         <x-slot name="content">
-            <!-- Selector de Taller -->
             <div class="mb-4">
                 <x-label value="Taller:" for="taller" />
                 <select wire:model="taller"
@@ -63,17 +62,23 @@
             </div>
             <div class="mb-4">
                 <x-label value="Subir Documentos:" />
-                <x-input wire:model="documento" type="file" id="{{ $documento }}" class="w-full" />
-                <x-input-error for="documento" />
+                <input wire:model="documentos" type="file" id="documentos" class="w-full" multiple accept=".pdf,.docx" />
+                @error('documentos.*') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
             <div class="mb-4">
-                <x-label value="Documento PDF:" />
-                @if ($documento)
-                    <a href="{{ asset($documento) }}" target="_blank">Ver PDF</a>
-                    <!-- Opcional: Si deseas mostrar el PDF directamente en la página -->
-                    <embed src="{{ $documento }}" type="application/pdf" width="100%" height="500px" />
+                @if ($documentos)
+                    <h2 class="font-bold text-lg">Documentos Subidos:</h2>
+                    <ul>
+                        @foreach ($documentos as $index => $documento)
+                            <li>
+                                <a href="{{ asset(Storage::url(json_decode($documento))) }}" target="_blank">
+                                    Documento {{ $index + 1 }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 @else
-                    <p>No se ha cargado ningún PDF.</p>
+                    <p>No se ha cargado ningún documento.</p>
                 @endif
             </div>
                       
