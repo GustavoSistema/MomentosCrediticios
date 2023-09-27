@@ -6,6 +6,7 @@ use App\Models\Evalua;
 use App\Models\Taller;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\File;
 
 class Evaluacion extends Component
 {
@@ -19,14 +20,21 @@ class Evaluacion extends Component
     public $evaluacionId;
     public $selectedEvaluacionId;
     public $documentos = [];
+    public $evaluacionDocumentos = [];
     #[On('render')]
 
     public function render()
+{
+    $talleres = Taller::all();
+    $evaluacion = Evalua::all();
+    return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
+}
+   /*public function render()
     {
-        $talleres = Taller::all();
-        $evaluacion = Evalua::with('taller')->get();
-        return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
-    }
+        $evaluaciones = Evalua::all(); // Obtén todas las evaluaciones
+        $talleres = Taller::all(); // Obtén la lista de talleres
+        return view('livewire.evaluacion', ['evaluaciones' => $evaluaciones, 'talleres' => $talleres]);
+    }*/
 
     public function editEstado($id)
     {
@@ -122,10 +130,15 @@ class Evaluacion extends Component
             $documentos = $evaluacion->documentos;
 
             // Verificar si hay documentos y convertirlos en un array.
-            $this->documentos = $documentos ? explode(',', $documentos) : [];
+            $this->evaluacionDocumentos = $documentos ? explode(',', $documentos) : [];
 
-            $this->editando3 = true;
+            // Muestra la evaluación
+            //dd($evaluacion);
+
+            // Muestra los documentos
+            //dd($this->evaluacionDocumentos);
         }
+        $this->editando3 = true;
     }
 
     public function delete($id)

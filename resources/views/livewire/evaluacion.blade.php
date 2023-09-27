@@ -55,7 +55,7 @@
                                         {{ $evalua->taller->nombre }}
                                     </p>
                                 </div>
-                            </td>                            
+                            </td>
                             <td class="pl-2">
                                 <div class="flex items-center">
                                     <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
@@ -65,24 +65,21 @@
                             </td>
                             <td class="pl-2">
                                 <div class="flex items-center">
-                                    <p
-                                    class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
                                         {{ $evalua->celular }}
                                     </p>
                                 </div>
                             </td>
                             <td class="pl-2">
                                 <div class="flex items-center">
-                                    <p
-                                    class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
                                         {{ $evalua->email }}
                                     </p>
                                 </div>
                             </td>
                             <td class="pl-2">
                                 <div class="flex items-center">
-                                    <p
-                                    class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
                                         {{ $evalua->fecha }}
                                     </p>
                                 </div>
@@ -254,16 +251,35 @@
             </h1>
         </x-slot>
         <x-slot name="content">
-            @if (count($documentos) > 0)
-                <ul>
-                    @foreach ($documentos as $documento)
-                        <a href="{{ asset('storage/app/public/evaluacion/' . $documento) }}"
-                            target="_blank">{{ $documento }}</a><br>
-                    @endforeach
-                </ul>
-            @else
-                <p>No se encontraron documentos.</p>
-            @endif
+            @foreach ($evaluacion as $evalua)
+                <tr>
+                    <td>{{ $evalua->id }}</td>
+                    <!-- Otras columnas de evaluación -->
+                    <td>
+                        @php
+                            $documentos = File::allFiles(public_path('storage/evaluacion'));
+                            $documentosEvaluacion = [];
+                            
+                            foreach ($documentos as $documento) {
+                                $nombreDocumento = pathinfo($documento, PATHINFO_FILENAME);
+                                if (strpos($evalua->documentos, $nombreDocumento) !== false) {
+                                    $documentosEvaluacion[] = $nombreDocumento;
+                                }
+                            }
+                        @endphp
+
+                        @if (!empty($documentosEvaluacion))
+                            <ul>
+                                @foreach ($documentosEvaluacion as $documento)
+                                    <li><a href="{{ asset('storage/evaluacion/' . $documento) }}"
+                                            target="_blank">{{ $documento }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </td>
+                    <!-- Otras columnas de evaluación -->
+                </tr>
+            @endforeach
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('editando3', false)">

@@ -10,26 +10,22 @@ use Livewire\WithFileUploads;
 class CrearEvaluacion extends Component
 {
     public $open = false;
-    public $taller;
-    public $nomcliente;
-    public $apecliente;
-    public $dnicliente;
-    public $celular;
-    public $email;
-    public $fecha;
+    public $taller, $nomcliente, $apecliente, $dnicliente, $celular, $email, $fecha;
     public $documento;
     public $borradocumento;
     public $estado;
     public $estados = ['Por Revisar', 'Revisado', 'Observado'];
     public $documentos = [];
+    public $identificador;
+    public $mostrarIconoAgregar = false;
+    public $nuevosDocumentos = []; // icono + agregar archivos
     use WithFileUploads;
-
-
 
     /*public function render()
     {
         return view('livewire.crear-evaluacion');
     }*/
+
     protected $rules = [
         'taller' => 'required',
         'nomcliente' => 'required',
@@ -44,6 +40,7 @@ class CrearEvaluacion extends Component
     public function mount()
     {
         $this->borradocumento = rand();
+        $this->identificador = uniqid();
     }
 
     public function render()
@@ -57,7 +54,7 @@ class CrearEvaluacion extends Component
         $this->validate();
         $documentoPaths = [];
         foreach ($this->documentos as $documento) {
-            $documentoPath = $documento->store('temp', 'public');
+            $documentoPath = $documento->store('evaluacion', 'public');
             $documentoPaths[] = $documentoPath;
         }
         Evalua::create([
@@ -74,9 +71,28 @@ class CrearEvaluacion extends Component
         ]);
         $this->resetForm();
         $this->documentos = [];
+        $this->mostrarIconoAgregar = false; // Resetea la variable al agregar
         $this->dispatch('render');
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'La evaluacion se envio correctamente', 'icono' => 'success']);
         $this->borradocumento = rand();
+    }
+
+    public function deleteDocumentUpload($index)
+    {
+        unset($this->documentos[$index]);
+        if (count($this->documentos) == 0) {
+            $this->mostrarIconoAgregar = false; // Oculta el icono si no hay documentos
+        }
+    }
+    public function limpiarDocumentos()
+    {
+        $this->documentos = [];
+        $this->mostrarIconoAgregar = false; // Resetea la variable al limpiar
+    }
+    public function mostrarIcono()
+    {
+        $this->mostrarIconoAgregar = true; // Muestra el icono cuando se selecciona un archivo
+
     }
 
     public function resetForm()
@@ -90,5 +106,6 @@ class CrearEvaluacion extends Component
         $this->email = '';
         $this->fecha = '';
         $this->borradocumento = null;
+        $this->documentos = [];
     }
 }

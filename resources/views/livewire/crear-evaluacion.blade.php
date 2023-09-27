@@ -49,39 +49,84 @@
                 <x-input wire:model="email" type="email" id="email" class="w-full" />
                 <x-input-error for="email" />
             </div>
-            <div class="mb-4">
-                <x-label value="Fecha:" />
-                <x-input wire:model="fecha" type="date" id="fecha" class="w-full" />
-                <x-input-error for="fecha" />
+            <div class="flex space-x-2">
+                <div class="w-1/2">
+                    <x-label value="Fecha:" />
+                    <x-input wire:model="fecha" type="date" id="fecha" class="w-full" />
+                    <x-input-error for="fecha" />
+                </div>
+                <div class="w-1/2">
+                    <x-label value="Estado:" for="estado" />
+                    <x-input value="Por Revisar" type="text" id="estado" class="w-full" readonly />
+                    @error('estado')
+                        <span class="text-red-500">{{ $message }}
+                        @enderror
+                </div>
             </div>
-            <div class="mb-4">
-                <x-label value="Estado:" for="estado" />
-                <x-input value="Por Revisar" type="text" id="estado" class="w-full" readonly />
-                <!-- Elimina el código del select -->
-                 @error('estado') <span class="text-red-500">{{ $message }} @enderror
-            </div>
+            
             <div class="mb-4">
                 <x-label value="Subir Documentos:" />
-                <input wire:model="documentos" type="file" id="documentos" class="w-full" multiple accept=".pdf,.docx" />
-                @error('documentos.*') <span class="text-red-500">{{ $message }}</span> @enderror
+                <input wire:model="documentos" type="file" id="{{$borradocumento}}" class="w-full" multiple
+                    accept=".pdf,.docx" />
+                @error('documentos.*')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
             </div>
-            <div class="mb-4">
-                @if ($documentos)
-                    <h2 class="font-bold text-lg">Documentos Subidos:</h2>
-                    <ul>
-                        @foreach ($documentos as $index => $documento)
-                            <li>
-                                <a href="{{ asset(Storage::url(json_decode($documento))) }}" target="_blank">
-                                    Documento {{ $index + 1 }}
+            <h1 class="font-semibold sm:text-lg text-gray-900">
+                Galería de documentos:
+            </h1>
+            @if ($documentos)
+                <section class="mt-4 overflow-hidden border-dotted border-2 text-gray-700"
+                    id="{{ 'section-' . $identificador }}">
+                    <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+                        <div class="flex flex-wrap -m-1 md:-m-2">
+                            @foreach ($documentos as $key => $documento)
+                                <div class="flex flex-wrap w-1/5">
+                                    <div class="w-full p-1 md:p-2 items-center justify-center text-center">
+                                        @if (in_array($documento->extension(), ['pdf', 'xls', 'xlsx', 'docx']))
+                                            <img alt="gallery"
+                                                class="mx-auto flex object-cover object-center w-15 h-15 rounded-lg"
+                                                src="/images/{{ $documento->extension() }}.png">
+                                        @else
+                                            <img alt="gallery"
+                                                class="mx-auto flex object-cover object-center w-15 h-15 rounded-lg"
+                                                src="/images/pdf.png">
+                                        @endif
+                                        <p class="truncate text-sm">{{ $documento->getClientOriginalName() }}</p>
+                                        <a class="flex" wire:click="deleteDocumentUpload({{ $key }})"><i
+                                                class="fas fa-trash mt-1 mx-auto hover:text-indigo-400"></i></a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <!--<div class="flex items-center">
+                                <a class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse"
+                                    wire:click="mostrarIcono">
+                                    <i class="fas fa-plus"></i>
+                                    <span
+                                        class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
+                                        Agregar
+                                    </span>
                                 </a>
-                            </li>
-                        @endforeach
+                                <input wire:model="documentos" type="file" id="documentos" class="ml-2" multiple
+                                    accept=".pdf,.docx" style="display: none;" />
+                            </div>-->
+                        </div>
+                    </div>
+                </section>
+            @else
+                <section class="h-full overflow-auto p-8 w-full h-full flex flex-col">
+                    <ul id="gallery-documents" class="flex flex-1 flex-wrap -m-1">
+                        <li id="empty"
+                            class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                            <img class="mx-auto w-32"
+                                src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+                                alt="no data" />
+                            <span class="text-small text-gray-500">Aún no seleccionaste ningún archivo</span>
+                        </li>
                     </ul>
-                @else
-                    <p>No se ha cargado ningún documento.</p>
-                @endif
-            </div>
-                      
+                </section>
+            @endif
+
         </x-slot>
 
         <x-slot name="footer">

@@ -37,5 +37,10 @@ Route::middleware([
     Route::get('/prestamos', Prestamos::class)->name('prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
+
+
+    Route::get('/storage/evaluacion/{documento}', function ($documento) {
+        return response()->file(storage_path('app/public/evaluacion/' . $documento));
+    });
 });
 
