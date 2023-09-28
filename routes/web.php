@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FilesController;
 use App\Livewire\Clientes;
 use App\Livewire\Cobranzas;
 use App\Livewire\Evaluacion;
@@ -39,8 +40,13 @@ Route::middleware([
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
 
 
-    Route::get('/storage/evaluacion/{documento}', function ($documento) {
-        return response()->file(storage_path('app/public/evaluacion/' . $documento));
-    });
+    Route::get('/', [FilesController::class, 'loadView']);
+    Route::post('/', [FilesController::class, 'storeFile']);
+    Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');
+
+    /*Route::get('files', function () {
+        return view('files');
+    })->name('files');*/
+
 });
 

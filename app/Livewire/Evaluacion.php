@@ -6,7 +6,7 @@ use App\Models\Evalua;
 use App\Models\Taller;
 use Livewire\Component;
 use Livewire\Attributes\On;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class Evaluacion extends Component
 {
@@ -14,27 +14,19 @@ class Evaluacion extends Component
     public $estados = ['Por Revisar', 'Revisado', 'Observado'];
     public $editando;
     public $editando2;
-    public $editando3;
+    public $editando3 = true;
     public $estadoActual;
     public $nuevoEstado;
     public $evaluacionId;
-    public $selectedEvaluacionId;
     public $documentos = [];
-    public $evaluacionDocumentos = [];
     #[On('render')]
 
     public function render()
-{
-    $talleres = Taller::all();
-    $evaluacion = Evalua::all();
-    return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
-}
-   /*public function render()
     {
-        $evaluaciones = Evalua::all(); // Obtén todas las evaluaciones
-        $talleres = Taller::all(); // Obtén la lista de talleres
-        return view('livewire.evaluacion', ['evaluaciones' => $evaluaciones, 'talleres' => $talleres]);
-    }*/
+        $talleres = Taller::all();
+        $evaluacion = Evalua::all();
+        return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
+    }
 
     public function editEstado($id)
     {
@@ -122,24 +114,14 @@ class Evaluacion extends Component
 
     public function verDocumento($evaluacionId)
     {
-        $this->selectedEvaluacionId = $evaluacionId;
-        $evaluacion = Evalua::find($evaluacionId);
+        // Llama al método loadView para cargar la vista y obtener los archivos.
+        $this->loadView();
 
-        if ($evaluacion) {
-            // Obtener los nombres de los documentos relacionados con la evaluación.
-            $documentos = $evaluacion->documentos;
-
-            // Verificar si hay documentos y convertirlos en un array.
-            $this->evaluacionDocumentos = $documentos ? explode(',', $documentos) : [];
-
-            // Muestra la evaluación
-            //dd($evaluacion);
-
-            // Muestra los documentos
-            //dd($this->evaluacionDocumentos);
-        }
+        // Luego, abre el modal
         $this->editando3 = true;
     }
+
+
 
     public function delete($id)
     {

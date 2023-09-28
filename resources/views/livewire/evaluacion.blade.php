@@ -251,35 +251,49 @@
             </h1>
         </x-slot>
         <x-slot name="content">
-            @foreach ($evaluacion as $evalua)
-                <tr>
-                    <td>{{ $evalua->id }}</td>
-                    <!-- Otras columnas de evaluación -->
-                    <td>
-                        @php
-                            $documentos = File::allFiles(public_path('storage/evaluacion'));
-                            $documentosEvaluacion = [];
-                            
-                            foreach ($documentos as $documento) {
-                                $nombreDocumento = pathinfo($documento, PATHINFO_FILENAME);
-                                if (strpos($evalua->documentos, $nombreDocumento) !== false) {
-                                    $documentosEvaluacion[] = $nombreDocumento;
-                                }
-                            }
-                        @endphp
-
-                        @if (!empty($documentosEvaluacion))
-                            <ul>
-                                @foreach ($documentosEvaluacion as $documento)
-                                    <li><a href="{{ asset('storage/evaluacion/' . $documento) }}"
-                                            target="_blank">{{ $documento }}</a></li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </td>
-                    <!-- Otras columnas de evaluación -->
-                </tr>
-            @endforeach
+            <div class="mb-4">
+                <x-label value="Subir Documentos:" />
+                <input name="file" type="file" class="w-full" multiple accept=".pdf,.docx" required />
+                @error('file')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <x-label value="DNI_Nombre Archivo" />
+                <x-input type="text" name="name" class="w-full" required autocomplete="disabled" />
+                @error('name')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="text-center mb-4">
+                <button type="submit" wire:loading.attr="disabled"
+                    class="bg-indigo-500 text-white py-2 px-4 rounded-md shadow-md mx-auto">
+                    Guardar
+                </button>
+            </div>
+            <h3>Archivos Cargados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Miniatura</th>
+                        <th>Archivo</th>
+                        <th>Tamaño</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (isset($files))
+                        @foreach ($files as $file)
+                            <tr>
+                                <td>@if($file['picture'])<img src="{{$file['picture']}}">@endif</td>
+                                <td>
+                                    <a href="{{$file['link']}}" target="_blank">{{$file['name']}}</a>
+                                </td>
+                                <td>{{$file['size']}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('editando3', false)">
@@ -317,5 +331,6 @@
             });
         </script>
     @endpush
+
 
 </div>
