@@ -6,6 +6,7 @@ use App\Models\Evalua;
 use App\Models\Taller;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class CrearEvaluacion extends Component
 {
@@ -19,6 +20,7 @@ class CrearEvaluacion extends Component
     public $identificador;
     public $mostrarIconoAgregar = false;
     public $nuevosDocumentos = []; // icono + agregar archivos
+    private $disk = "public";
     use WithFileUploads;
 
     /*public function render()
@@ -49,12 +51,17 @@ class CrearEvaluacion extends Component
         return view('livewire.crear-evaluacion', ['talleres' => $talleres]);
     }
 
+    protected function formatName($name)
+    {
+        return Str::slug($name, '');
+    }
     public function crearEvaluacion()
     {
         $this->validate();
         $documentoPaths = [];
+        $dniFolder = $this->dnicliente . '_' . $this->formatName($this->nomcliente) . $this->formatName($this->apecliente);
         foreach ($this->documentos as $documento) {
-            $documentoPath = $documento->store('evaluacion', 'public');
+            $documentoPath = $documento->storeAs("public/{$dniFolder}", $documento->getClientOriginalName());
             $documentoPaths[] = $documentoPath;
         }
         Evalua::create([

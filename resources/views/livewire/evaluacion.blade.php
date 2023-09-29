@@ -246,55 +246,23 @@
     {{-- MODAL VER DOCUMENTOS --}}
     <x-dialog-modal wire:model="editando3" wire:loading.attr="disabled">
         <x-slot name="title" class="font-bold">
-            <h1 class="pt-2  font-semibold sm:text-lg text-gray-900">
-                Documentos:
-            </h1>
+            <h1 class="text-xl font-bold">Carpeta de Documentos</h1>
         </x-slot>
-        <x-slot name="content">
-            <div class="mb-4">
-                <x-label value="Subir Documentos:" />
-                <input name="file" type="file" class="w-full" multiple accept=".pdf,.docx" required />
-                @error('file')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <x-label value="DNI_Nombre Archivo" />
-                <x-input type="text" name="name" class="w-full" required autocomplete="disabled" />
-                @error('name')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="text-center mb-4">
-                <button type="submit" wire:loading.attr="disabled"
-                    class="bg-indigo-500 text-white py-2 px-4 rounded-md shadow-md mx-auto">
-                    Guardar
-                </button>
-            </div>
-            <h3>Archivos Cargados</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Miniatura</th>
-                        <th>Archivo</th>
-                        <th>Tamaño</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (isset($files))
-                        @foreach ($files as $file)
-                            <tr>
-                                <td>@if($file['picture'])<img src="{{$file['picture']}}">@endif</td>
-                                <td>
-                                    <a href="{{$file['link']}}" target="_blank">{{$file['name']}}</a>
-                                </td>
-                                <td>{{$file['size']}}</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
+    
+        <x-slot name="content">     
+            @if (count($documentosEvaluacion) > 0)
+            <ul>
+                @foreach ($documentosEvaluacion as $documento)
+                    <li>
+                        <a href="{{ $documento['enlace'] }}" target="_blank">{{ $documento['nombre'] }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <p>No hay documentos disponibles.</p>
+        @endif       
         </x-slot>
+    
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('editando3', false)">
                 Cerrar

@@ -63,10 +63,10 @@
                         @enderror
                 </div>
             </div>
-            
+
             <div class="mb-4">
                 <x-label value="Subir Documentos:" />
-                <input wire:model="documentos" type="file" id="{{$borradocumento}}" class="w-full" multiple
+                <input wire:model="documentos" type="file" id="{{ $borradocumento }}" class="w-full" multiple
                     accept=".pdf,.docx" />
                 @error('documentos.*')
                     <span class="text-red-500">{{ $message }}</span>
@@ -86,11 +86,11 @@
                                         @if (in_array($documento->extension(), ['pdf', 'xls', 'xlsx', 'docx']))
                                             <img alt="gallery"
                                                 class="mx-auto flex object-cover object-center w-15 h-15 rounded-lg"
-                                                src="/images/{{ $documento->extension() }}.png">
+                                                src="{{ asset('images/pdf.png') }}">
                                         @else
                                             <img alt="gallery"
                                                 class="mx-auto flex object-cover object-center w-15 h-15 rounded-lg"
-                                                src="/images/pdf.png">
+                                                src="{{ asset('images/pdf.png') }}">
                                         @endif
                                         <p class="truncate text-sm">{{ $documento->getClientOriginalName() }}</p>
                                         <a class="flex" wire:click="deleteDocumentUpload({{ $key }})"><i
@@ -98,18 +98,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <!--<div class="flex items-center">
-                                <a class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse"
-                                    wire:click="mostrarIcono">
-                                    <i class="fas fa-plus"></i>
-                                    <span
-                                        class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
-                                        Agregar
-                                    </span>
-                                </a>
-                                <input wire:model="documentos" type="file" id="documentos" class="ml-2" multiple
-                                    accept=".pdf,.docx" style="display: none;" />
-                            </div>-->
                         </div>
                     </div>
                 </section>

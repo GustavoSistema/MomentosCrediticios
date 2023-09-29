@@ -7,6 +7,9 @@ use App\Models\Taller;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class Evaluacion extends Component
 {
@@ -14,11 +17,14 @@ class Evaluacion extends Component
     public $estados = ['Por Revisar', 'Revisado', 'Observado'];
     public $editando;
     public $editando2;
-    public $editando3 = true;
+    public $editando3;
     public $estadoActual;
     public $nuevoEstado;
     public $evaluacionId;
-    public $documentos = [];
+    public $documentosEvaluacion = [];
+    private $disk = "public";
+
+
     #[On('render')]
 
     public function render()
@@ -112,14 +118,36 @@ class Evaluacion extends Component
         }
     }
 
+
+
+
     public function verDocumento($evaluacionId)
     {
-        // Llama al método loadView para cargar la vista y obtener los archivos.
-        $this->loadView();
-
-        // Luego, abre el modal
+        // Construye la ruta de la carpeta de documentos para esta evaluación
+        $carpetaDocumentos = "public/{$evaluacionId}";
+    
+        // Verifica si la carpeta existe
+        if (Storage::disk($this->disk)->exists($carpetaDocumentos)) {
+            // Recupera la lista de documentos en la carpeta
+            $documentos = Storage::disk($this->disk)->files($carpetaDocumentos);
+    
+            // Construye los enlaces de descarga para cada documento
+            $this->documentosEvaluacion = collect($documentos)->map(function ($documento) use ($evaluacionId) {
+                $nombreDocumento = basename($documento);
+                $enlaceDescarga = route('descargarDocumento', ['evaluacionId' => $evaluacionId, 'nombreDocumento' => $nombreDocumento]);
+                return [
+                    'nombre' => $nombreDocumento,
+                    'enlace' => $enlaceDescarga,
+                ];
+            })->toArray();
+        } else {
+            $this->documentosEvaluacion = [];
+        }
+    
         $this->editando3 = true;
     }
+
+
 
 
 
