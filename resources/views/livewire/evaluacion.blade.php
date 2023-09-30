@@ -1,9 +1,19 @@
 <div>
-    <div class="mx-8 rounded-md">
+    <div class="mx-8 rounded-md mb-4">
         <div class="col-md-6 text-center">
             <h3 style="font-size: 2.5rem; font-weight: bold;">Registro de Evaluación</h3>
         </div>
-        @livewire('crear-evaluacion')
+        <div>
+            <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
+                <span>Buscar: </span>
+                <input wire:model="busqueda"
+                    class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
+                <div class="ml-auto">
+                    @livewire('crear-evaluacion')
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="mx-8 rounded-md">
         @if (isset($evaluacion) && count($evaluacion) > 0)
@@ -131,6 +141,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $evaluacion->links() }}
         @endif
     </div>
 
@@ -248,21 +259,20 @@
         <x-slot name="title" class="font-bold">
             <h1 class="text-xl font-bold">Carpeta de Documentos</h1>
         </x-slot>
-    
-        <x-slot name="content">     
-            @if (count($documentosEvaluacion) > 0)
-            <ul>
-                @foreach ($documentosEvaluacion as $documento)
-                    <li>
-                        <a href="{{ $documento['enlace'] }}" target="_blank">{{ $documento['nombre'] }}</a>
-                    </li>
+
+        <x-slot name="content">
+            @if (isset($files))
+                @foreach ($files as $file)
+                    <tr>
+                        <td>@if($file['picture'])<img src="{{$file['picture']}}">@endif</td>
+                        <td>
+                            <a href="{{$file['link']}}" target="_blank">{{$file['name']}}</a>
+                        </td>
+                    </tr>
                 @endforeach
-            </ul>
-        @else
-            <p>No hay documentos disponibles.</p>
-        @endif       
+            @endif
         </x-slot>
-    
+
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('editando3', false)">
                 Cerrar

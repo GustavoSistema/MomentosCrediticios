@@ -7,8 +7,8 @@ use App\Models\Taller;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
 
 class Evaluacion extends Component
@@ -21,8 +21,12 @@ class Evaluacion extends Component
     public $estadoActual;
     public $nuevoEstado;
     public $evaluacionId;
-    public $documentosEvaluacion = [];
     private $disk = "public";
+    public $documentos = [];
+    public $busqueda = '';
+    public $eva;
+    use WithFileUploads;
+
 
 
     #[On('render')]
@@ -30,7 +34,14 @@ class Evaluacion extends Component
     public function render()
     {
         $talleres = Taller::all();
-        $evaluacion = Evalua::all();
+        $evaluacion = Evalua::query()
+            ->when($this->busqueda, function ($query) {
+                $query->where(function ($subquery) {
+                    $subquery->where('nomcliente', 'like', '%' . $this->busqueda . '%')
+                        ->orWhere('dnicliente', 'like', '%' . $this->busqueda . '%');
+                });
+            })
+            ->paginate(10);
         return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
     }
 
@@ -119,34 +130,92 @@ class Evaluacion extends Component
     }
 
 
-
-
-    public function verDocumento($evaluacionId)
+    protected function formatName($name)
     {
-        // Construye la ruta de la carpeta de documentos para esta evaluación
-        $carpetaDocumentos = "public/{$evaluacionId}";
-    
-        // Verifica si la carpeta existe
-        if (Storage::disk($this->disk)->exists($carpetaDocumentos)) {
-            // Recupera la lista de documentos en la carpeta
-            $documentos = Storage::disk($this->disk)->files($carpetaDocumentos);
-    
-            // Construye los enlaces de descarga para cada documento
-            $this->documentosEvaluacion = collect($documentos)->map(function ($documento) use ($evaluacionId) {
-                $nombreDocumento = basename($documento);
-                $enlaceDescarga = route('descargarDocumento', ['evaluacionId' => $evaluacionId, 'nombreDocumento' => $nombreDocumento]);
-                return [
-                    'nombre' => $nombreDocumento,
-                    'enlace' => $enlaceDescarga,
-                ];
-            })->toArray();
-        } else {
-            $this->documentosEvaluacion = [];
-        }
-    
-        $this->editando3 = true;
+        return Str::slug($name, '');
     }
 
+    public function verDocumento(Evalua $evaluacion)
+    {
+        $eva = $evaluacion;
+        if ($eva) {
+            //$this->documentos = json_decode($evaluacion->documentos);
+            //$this->editando3 = true;
+            $dniFolder = "/".$eva->dnicliente . '_' . $this->formatName($eva->nomcliente) . $this->formatName($eva->apecliente);
+            $files = [];
+            $content=[];
+            $fil=Storage::put($dniFolder,$content);
+            dd($content);
+            foreach (Storage::disk("evaluacion")->files() as $file) {
+                $name = str_replace("public" . $dniFolder, "", $file);
+                $picture = "";               
+                $downloadLink = route("download", $name);
+               dd($file);
+                array_push($files,[
+                    "picture" => $picture,
+                    "name" => $name,
+                    "link" => $downloadLink,
+                ] );
+/*
+                $files[] = [
+                    "picture" => $picture,
+                    "name" => $name,
+                    "link" => $downloadLink,
+                ];*/
+            }
+            $this->$files = $files;
+        }
+    }
+
+    /* public function loadView(){
+        $files = [];       
+        foreach(Storage::disk($this->disk)->files() as $file) {
+            $name = str_replace("$this->disk/","", $file);
+            $picture = "";
+            $type = Storage::disk($this->disk)->mimeType($name);
+            
+            if(strpos($type, "image")!==false){
+                $picture = asset(Storage::disk($this->disk)->url($name));
+            }
+            $downloadLink = route("download", $name);
+            $files [] =[
+                "picture" => $picture,
+                "name" => $name,
+                "link" => $downloadLink,
+                "size" => Storage::disk($this->disk)->size($name)
+            ];
+        }
+    return view('files', ["files" => $files]);
+    }*/
+
+    /* public function cargarDocumento()
+    {
+        $this->validate([
+            'documentoSeleccionado' => 'required|file|mimes:pdf|max:10240', // Puedes ajustar los tipos y el tamaño según tus necesidades
+        ]);
+
+        // Guardar el archivo en la carpeta correspondiente
+        $path = $this->documentoSeleccionado->store('documentos', $this->disk);
+
+        // Actualizar la base de datos o realizar cualquier otra acción necesaria
+        // ...
+
+        // Limpiar la propiedad después de cargar el documento
+        $this->documentoSeleccionado = null;
+
+        // Refrescar la vista
+        $this->dispatch('render');
+    }
+    public function descargarDocumento($nombre)
+    {
+        $archivo = storage_path("app/{$this->disk}/" . $nombre);
+
+        if (file_exists($archivo)) {
+            return response()->download($archivo);
+        }
+
+        return response('', 404);
+    }*/
 
 
 

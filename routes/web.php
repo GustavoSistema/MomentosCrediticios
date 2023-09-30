@@ -39,14 +39,11 @@ Route::middleware([
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
 
-    /*Route::get('/', [FilesController::class, 'loadView']);
+    Route::get('/', [FilesController::class, 'loadView']);
     Route::post('/', [FilesController::class, 'storeFile']);
-    Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');*/
+    Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');
     
-    Route::get('evaluaciones/{evaluacion}/documentos', 'EvaluacionController@mostrarDocumentos')
-    ->name('mostrar_documentos');
-
-    Route::get('/descargar-documento/{evaluacionId}/{nombreDocumento}', [FilesController::class, 'descargarDocumento'])->name('descargarDocumento');
+    Route::get('descargar-documento/{nombre}', 'Evaluacion@descargarDocumento');
 
 
  });

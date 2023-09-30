@@ -24,6 +24,18 @@ class Evalua extends Model
     {
         return $this->belongsTo(Taller::class, 'idTaller');
     }
-    
 
+    
+    /*public function documentosAdjuntos()
+    {
+        return $this->hasMany(DocumentoAdjunto::class, 'evaluacion_id');
+    }
+
+    public $evaluacion;
+
+    public function mount($evaluacionId)
+    {
+        // Cargar la evaluación con sus documentos adjuntos
+        $this->evaluacion = Evalua::with('documentosAdjuntos')->find($evaluacionId);
+    }*/
 }
