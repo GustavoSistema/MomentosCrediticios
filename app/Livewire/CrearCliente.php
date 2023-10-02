@@ -7,17 +7,20 @@ use Livewire\Component;
 
 class CrearCliente extends Component
 {
-    
-    public $nombre, $estado, $apellido, $dni, $genero;
+
+    public $nombre, $estado, $apellido, $dni, $genero, $celular, $correo, $direccion;
     public $opcionesGenero = ['Masculino', 'Femenino', 'Otro'];
-    public $open=false;
+    public $open = false;
 
     protected $rules = [
-        'nombre'=> 'required' ,
-        'estado'=> 'required' ,
-        'apellido'=> 'required' ,
-        'dni'=>'required',
-        'genero' => 'required',        
+        'nombre' => 'required',
+        'estado' => 'required',
+        'apellido' => 'required',
+        'dni' => 'required',
+        'genero' => 'required',
+        'celular' => 'required',
+        'direccion' => 'required',
+        'correo' => 'required|email',
     ];
 
     public function render()
@@ -35,14 +38,17 @@ class CrearCliente extends Component
             'apellido' => $this->apellido,
             'genero' => $this->genero,
             'dni' => $this->dni,
+            'celular' => $this->celular,
+            'direccion' => $this->direccion,
+            'correo' => $this->correo,
 
-        ]);   
-        
-        $this->reset(['open', 'nombre', 'apellido', 'dni', 'genero', 'estado']);
+
+        ]);
+
+        $this->reset(['open', 'nombre', 'apellido', 'dni', 'genero', 'celular', 'correo', 'direccion','estado']);
         $this->dispatch('render');
-        $this->dispatch('CustomAlert',['titulo'=>'Bien Hecho','mensaje'=>'El cliente se creo satisfactoriamente','icono'=>'success']);
-        
-    }  
+        $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'El cliente se creo satisfactoriamente', 'icono' => 'success']);
+    }
 
     public function resetForm()
     {
@@ -51,7 +57,9 @@ class CrearCliente extends Component
         $this->apellido = null;
         $this->dni = null;
         $this->genero = null;
+        $this->celular = null;
+        $this->correo = null;
+        $this->direccion = null;
         $this->estado = null;
     }
-
 }

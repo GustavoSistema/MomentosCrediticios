@@ -6,14 +6,13 @@
         <div>
             <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
                 <span>Buscar: </span>
-                <input wire:model="busqueda"
+                <input wire:model.live="search"
                     class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
                 <div class="ml-auto">
                     @livewire('crear-evaluacion')
                 </div>
             </div>
         </div>
-
     </div>
     <div class="mx-8 rounded-md">
         @if (isset($evaluacion) && count($evaluacion) > 0)
@@ -103,7 +102,7 @@
                             </td>
                             <td>
                                 <div class="flex space-x-2">
-                                    <a wire:click="verDocumento('{{ $evalua->id }}')"
+                                    <a wire:click="('{{ $evalua->id }}')"
                                         class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse">
                                         <i class="fas fa-file"></i>
                                         <span
@@ -264,9 +263,13 @@
             @if (isset($files))
                 @foreach ($files as $file)
                     <tr>
-                        <td>@if($file['picture'])<img src="{{$file['picture']}}">@endif</td>
                         <td>
-                            <a href="{{$file['link']}}" target="_blank">{{$file['name']}}</a>
+                            @if ($file['picture'])
+                                <img src="{{ $file['picture'] }}">
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ $file['link'] }}" target="_blank">{{ $file['name'] }}</a>
                         </td>
                     </tr>
                 @endforeach

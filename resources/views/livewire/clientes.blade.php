@@ -3,7 +3,16 @@
         <div class="col-md-6 text-center">
             <h3 style="font-size: 2.5rem; font-weight: bold;">Registro de clientes</h3>
         </div>
-        @livewire('crear-cliente')
+        <div>
+            <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
+                <span>Buscar: </span>
+                <input type="text" wire:model.live ="search"
+                    class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
+                <div class="ml-auto">
+                    @livewire('crear-cliente')
+                </div>
+            </div>
+        </div>
     </div>
     <div class="mx-8 rounded-md">
         @if (isset($clientes))
@@ -12,12 +21,19 @@
                     <tr>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">#
                         </th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Nombre
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-2 py-2 text-left">
+                            Nombres Completos
+                        </th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-3 py- text-left">DNI
                         </th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Apellido
+                            Celular
                         </th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">DNI
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            Direccion
+                        </th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            Correo
                         </th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Genero
@@ -38,35 +54,49 @@
                                 <div class="flex items-center">
                                     <p
                                         class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
-                                        {{ $cliente['id'] }}
+                                        {{ $cliente->id }}
                                     </p>
                                 </div>
                             </td>
-                            <td class="pl-5">
+                            <td class="pl-1">
                                 <div class="flex items-center">
                                     <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                        {{ $cliente['nombre'] }}
+                                        {{ $cliente->nombre }} {{ $cliente->apellido }}
                                     </p>
                                 </div>
                             </td>
-                            <td class="pl-5">
-                                <div class="flex items-center">
-                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                        {{ $cliente['apellido'] }}
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="pl-5">
+                            <td class="pl-0">
                                 <div class="flex items-center">
                                     <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
-                                        {{ $cliente['dni'] }}
+                                        {{ $cliente->dni }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-5">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                        {{ $cliente->celular }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-5">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                        {{ $cliente->direccion }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="pl-5">
+                                <div class="flex items-center">
+                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                        {{ $cliente->correo }}
                                     </p>
                                 </div>
                             </td>
                             <td class="pl-5">
                                 <div class="flex items-center">
                                     <p class="text-sm font-semibold  text-gray-600 p-1 bg-orange-100 rounded-full">
-                                        {{ $cliente['genero'] }}
+                                        {{ $cliente->genero }}
                                     </p>
                                 </div>
                             </td>
@@ -74,7 +104,7 @@
                                 <div class="flex items-center">
                                     <p
                                         class="bg-indigo-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative text-indigo-900">
-                                        {{ $cliente['estado'] }}
+                                        {{ $cliente->estado }}
                                     </p>
                                 </div>
                             </td>
@@ -103,12 +133,12 @@
                         </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table>    
             {{ $clientes->links() }}
         @endif
     </div>
 
-    {{-- MODAL PARA EDITAR TALLER --}}
+    {{-- MODAL PARA EDITAR CLIENTE --}}
     <x-dialog-modal wire:model="editando" wire:loading.attr="disabled">
         <x-slot name="title" class="font-bold">
             <h1 class="text-xl font-bold">Editar Cliente</h1>
@@ -142,6 +172,21 @@
                 <x-input-error for="genero" />
             </div>
             <div class="mb-4">
+                <x-label value="Celular:" />
+                <x-input wire:model="celular" type="number" class="w-full" />
+                <x-input-error for="celular" />
+            </div>
+            <div class="mb-4">
+                <x-label value="Correo:" />
+                <x-input wire:model="correo" type="email" class="w-full" />
+                <x-input-error for="correo" />
+            </div>
+            <div class="mb-4">
+                <x-label value="Direccion:" />
+                <x-input wire:model="direccion" type="text" class="w-full" />
+                <x-input-error for="direccion" />
+            </div>
+            <div class="mb-4">
                 <x-label value="Estado:" />
                 <x-input wire:model="estado" type="text" class="w-full" />
                 <x-input-error for="estado" />
@@ -166,8 +211,8 @@
                     text: "Esta acción no se puede revertir",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
                     confirmButtonText: 'Borrar',
                     cancelButtonText: 'Cancelar'
 

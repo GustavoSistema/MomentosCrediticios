@@ -8,8 +8,8 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Str;
+//use Illuminate\Pagination\Paginator;
+use Livewire\WithPagination;
 
 class Evaluacion extends Component
 {
@@ -23,9 +23,10 @@ class Evaluacion extends Component
     public $evaluacionId;
     private $disk = "public";
     public $documentos = [];
-    public $busqueda = '';
+    public $search = '';
     public $eva;
     use WithFileUploads;
+    use WithPagination;
 
 
 
@@ -34,16 +35,19 @@ class Evaluacion extends Component
     public function render()
     {
         $talleres = Taller::all();
-        $evaluacion = Evalua::query()
-            ->when($this->busqueda, function ($query) {
-                $query->where(function ($subquery) {
-                    $subquery->where('nomcliente', 'like', '%' . $this->busqueda . '%')
-                        ->orWhere('dnicliente', 'like', '%' . $this->busqueda . '%');
-                });
-            })
-            ->paginate(10);
+        $evaluacion = Evalua::where(function ($query) {
+            $query->where('nomcliente', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('dnicliente', 'LIKE', '%' . $this->search . '%');
+        })->paginate(10);
         return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
     }
+
+    /*public function render()
+    {
+        $talleres = Taller::all();
+        $evaluacion = Evalua::all();
+        return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
+    }*/
 
     public function editEstado($id)
     {
@@ -130,7 +134,7 @@ class Evaluacion extends Component
     }
 
 
-    protected function formatName($name)
+    /*protected function formatName($name)
     {
         return Str::slug($name, '');
     }
@@ -141,31 +145,30 @@ class Evaluacion extends Component
         if ($eva) {
             //$this->documentos = json_decode($evaluacion->documentos);
             //$this->editando3 = true;
-            $dniFolder = "/".$eva->dnicliente . '_' . $this->formatName($eva->nomcliente) . $this->formatName($eva->apecliente);
-            $files = [];
-            $content=[];
-            $fil=Storage::put($dniFolder,$content);
+            $dniFolder = "/" . $eva->dnicliente . '_' . $this->formatName($eva->nomcliente) . $this->formatName($eva->apecliente);
+
+            $fil = Storage::put($dniFolder);
             dd($content);
             foreach (Storage::disk("evaluacion")->files() as $file) {
                 $name = str_replace("public" . $dniFolder, "", $file);
-                $picture = "";               
+                $picture = "";
                 $downloadLink = route("download", $name);
-               dd($file);
-                array_push($files,[
+                dd($file);
+                array_push($files, [
                     "picture" => $picture,
                     "name" => $name,
                     "link" => $downloadLink,
-                ] );
-/*
+                ]);
+                
                 $files[] = [
                     "picture" => $picture,
                     "name" => $name,
                     "link" => $downloadLink,
-                ];*/
+                ];
             }
             $this->$files = $files;
         }
-    }
+    }*/
 
     /* public function loadView(){
         $files = [];       
@@ -232,7 +235,7 @@ class Evaluacion extends Component
     {
         //dd($kate);
         Evalua::find($kate)->delete();
-        $this->dispatch('render');
+        $this->render();
     }
 
     public function resetForm()

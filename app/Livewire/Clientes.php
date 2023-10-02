@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 class Clientes extends Component
 {
 
-    public $nombre, $estado, $apellido, $dni, $genero;
+    public $nombre, $estado, $apellido, $dni, $genero, $celular, $correo, $direccion;
     public $opcionesGenero = ['Masculino', 'Femenino', 'Otro'];
     public $search = "";
     public $editando;
@@ -22,7 +22,7 @@ class Clientes extends Component
 
     public function render()
     {
-
+        //dd($this->search);
         $clientes = Cliente::where(function ($query) {
             $query->where('nombre', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('dni', 'LIKE', '%' . $this->search . '%');
@@ -30,6 +30,7 @@ class Clientes extends Component
 
         return view('livewire.clientes', compact('clientes'));
     }
+    
     public function delete($id)
     {
        // Cliente::find($id)->delete();
@@ -57,6 +58,9 @@ class Clientes extends Component
             $this->dni = $cliente->dni;
             $this->genero = $cliente->genero;
             $this->estado = $cliente->estado;
+            $this->celular = $cliente->celular;
+            $this->correo = $cliente->correo;
+            $this->direccion = $cliente->direccion;
 
             $this->editando = true;
         }
@@ -69,6 +73,10 @@ class Clientes extends Component
             'dni' => 'required',
             'genero' => 'required',
             'estado' => 'required',
+            'celular' => 'required',
+            'correo' => 'required',
+            'direccion' => 'required',
+
         ]);
 
         if ($this->clienteid) {
@@ -81,6 +89,9 @@ class Clientes extends Component
                     'dni' => $this->dni,
                     'genero' => $this->genero,
                     'estado' => $this->estado,
+                    'celular' => $this->celular,
+                    'correo' => $this->correo,
+                    'direccion' => $this->direccion,
                 ]);
 
                 // Limpia los campos y cierra el modal de edición
@@ -99,6 +110,9 @@ class Clientes extends Component
         $this->dni = '';
         $this->genero = '';
         $this->estado = '';
-        $this->clienteid = null; // Reinicializa la variable clienteid
+        $this->celular = '';
+        $this->correo = '';
+        $this->direccion = '';
+        $this->clienteid = null;
     }
 }
