@@ -102,7 +102,7 @@
                             </td>
                             <td>
                                 <div class="flex space-x-2">
-                                    <a wire:click="('{{ $evalua->id }}')"
+                                    <a wire:click="verDocumento('{{ $evalua->id }}')"
                                         class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse">
                                         <i class="fas fa-file"></i>
                                         <span

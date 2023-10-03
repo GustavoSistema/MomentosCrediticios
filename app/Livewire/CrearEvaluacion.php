@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Documento;
 use App\Models\Evalua;
 use App\Models\Taller;
 use Livewire\Component;
@@ -60,11 +61,14 @@ class CrearEvaluacion extends Component
         $this->validate();
         $documentoPaths = [];
         $dniFolder = $this->dnicliente . '_' . $this->formatName($this->nomcliente) . $this->formatName($this->apecliente);
-        foreach ($this->documentos as $documento) {
-            $documentoPath = $documento->storeAs("public/{$dniFolder}", $documento->getClientOriginalName());
+        //dd($this->documentos);
+        /*foreach ($this->documentos as $documento) {
+            $extension = $documento->getMimeType();
+           // dd($extension);
+            $documentoPath = $documento->storeAs("public/DocumentosEvaluacion",$dniFolder);
             $documentoPaths[] = $documentoPath;
-        }
-        Evalua::create([
+        }*/
+        $eval = Evalua::create([
             'idTaller' => $this->taller,
             'nomcliente' => $this->nomcliente,
             'apecliente' => $this->apecliente,
@@ -76,12 +80,35 @@ class CrearEvaluacion extends Component
             'estado' => 'Por Revisar',
 
         ]);
+        $ids = [];
+        foreach($this->documentos as $key=>$documento){
+            $file_save= new Documento();
+            $file_save->nombre = $dniFolder."-".$key;
+            $file_save->extension=$documento->extension();
+            $file_save->ruta = $documento->storeAs('public/DocumentosEvaluacion',$file_save->nombre.'.'.$documento->extension());
+            //$guardaarchivo = $file_save->save();                        
+            
+
+
+            $guardaarchivo = Documento::create([
+                'nombre'=>$file_save->nombre,
+                'ruta'=>$file_save->ruta,
+                'extension'=>$file_save->extension,
+                
+            ]);
+            $ids[] = $guardaarchivo->id;
+        }
+        $eval->Documento()->attach($ids);
+        
         $this->resetForm();
         $this->documentos = [];
-        $this->mostrarIconoAgregar = false; // Resetea la variable al agregar
+        $this->mostrarIconoAgregar = false;
         $this->dispatch('render');
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'La evaluacion se envio correctamente', 'icono' => 'success']);
         $this->borradocumento = rand();
+    }
+    public function guardaDocumento($documento){
+        
     }
 
     public function deleteDocumentUpload($index)

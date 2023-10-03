@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class Evalua extends Model
 {
@@ -24,7 +26,10 @@ class Evalua extends Model
     {
         return $this->belongsTo(Taller::class, 'idTaller');
     }
-
+    public function Documento(): BelongsToMany
+    {
+        return $this->belongsToMany(Documento::class, 'Documentos_Evaluacion', 'idEvaluacion', 'idDocumentos' );
+    }
     
     /*public function documentosAdjuntos()
     {
