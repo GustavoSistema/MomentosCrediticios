@@ -28,20 +28,20 @@ class CrearPrestamo extends Component
     public $mtotal;
     public $calculosRealizados = false;
 
-    /*protected $rules = [
-        'clienteDni' => 'required',
+    protected $rules = [
+        'clienteDni' => 'required|exists:clientes,dni',
         'clienteNombres' => 'required',
-        'producto' => 'required',
-        'monto' => 'required',
-        'interes' => 'required',
-        'cuotas' => 'required',
-        'fpago' => 'required',
-        'fecha' => 'required',
+        'productoId' => 'required',
+        'monto' => 'required|numeric|min:1',
+        'interes' => 'required|numeric|min:0',
+        'cuotas' => 'required|integer|min:1',
+        'formaPago' => 'required',
+        'fecha' => 'required|date',
         'vcuota' => 'required',
         'vinteres' => 'required',
         'mtotal' => 'required',
 
-    ];*/
+    ];
 
     public function render()
     {        
@@ -56,17 +56,8 @@ class CrearPrestamo extends Component
 
     public function crearPrestamo()
     {
-        // Validaciones de entrada (puedes personalizar estas validaciones según tus requisitos)
-        $this->validate([
-            'clienteDni' => 'required|exists:clientes,dni',
-            'productoId' => 'required',
-            'monto' => 'required|numeric|min:1',
-            'interes' => 'required|numeric|min:0',
-            'cuotas' => 'required|integer|min:1',
-            'formaPago' => 'required',
-            'fecha' => 'required|date',
-        ]);
-
+        
+        $this->validate();
         $cuotas = intval($this->cuotas);
         // Obtener el ID del cliente usando el DNI
         $cliente = Cliente::where('dni', $this->clienteDni)->first();
@@ -83,6 +74,11 @@ class CrearPrestamo extends Component
             'mtotal' => $this->mtotal,
 
         ]);
+        
+        if ($cliente) {
+            $cliente->estado = 'Con crédito';
+            $cliente->save();
+        }
 
         $this->resetForm();
         $this->dispatch('render');

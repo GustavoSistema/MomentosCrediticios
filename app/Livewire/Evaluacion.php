@@ -2,14 +2,15 @@
 
 namespace App\Livewire;
 
+use App\Models\Documento;
 use App\Models\Evalua;
 use App\Models\Taller;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
-//use Illuminate\Pagination\Paginator;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class Evaluacion extends Component
 {
@@ -25,30 +26,19 @@ class Evaluacion extends Component
     public $documentos = [];
     public $search = '';
     public $eva;
+    public $files = [];
     use WithFileUploads;
     use WithPagination;
-
-
-
     #[On('render')]
 
     public function render()
     {
         $talleres = Taller::all();
         $evaluacion = Evalua::where(function ($query) {
-            $query->where('nomcliente', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('dnicliente', 'LIKE', '%' . $this->search . '%');
-        })->paginate(10);
+            $query->where('nomcliente', 'LIKE', '%' . $this->search . '%');
+        })->with('Documento')->paginate(10);
         return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
     }
-
-    /*public function render()
-    {
-        $talleres = Taller::all();
-        $evaluacion = Evalua::all();
-        return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
-    }*/
-
     public function editEstado($id)
     {
         $evaluacion = Evalua::find($id);
@@ -133,63 +123,35 @@ class Evaluacion extends Component
         }
     }
 
-
-    /*protected function formatName($name)
+    protected function formatName($name)
     {
         return Str::slug($name, '');
     }
 
-    public function verDocumento(Evalua $evaluacion)
+    public function verDocumento($evaluacionId)
     {
-        $eva = $evaluacion;
-        if ($eva) {
-            //$this->documentos = json_decode($evaluacion->documentos);
-            //$this->editando3 = true;
-            $dniFolder = "/" . $eva->dnicliente . '_' . $this->formatName($eva->nomcliente) . $this->formatName($eva->apecliente);
+        $evaluacion = Evalua::with('Documento')->find($evaluacionId);
 
-            $fil = Storage::put($dniFolder);
-            dd($content);
-            foreach (Storage::disk("evaluacion")->files() as $file) {
-                $name = str_replace("public" . $dniFolder, "", $file);
-                $picture = "";
-                $downloadLink = route("download", $name);
-                dd($file);
-                array_push($files, [
-                    "picture" => $picture,
-                    "name" => $name,
-                    "link" => $downloadLink,
-                ]);
-                
-                $files[] = [
-                    "picture" => $picture,
-                    "name" => $name,
-                    "link" => $downloadLink,
-                ];
-            }
-            $this->$files = $files;
+        // Verifica si la evaluación y sus documentos existen
+        if ($evaluacion && $evaluacion->Documento->isNotEmpty()) {
+            $this->editando3 = true;
+            $this->documentos = $evaluacion->Documento; // Establece los documentos para mostrarlos en el modal
         }
-    }*/
+    }
+    
+    public function descargar($id)
+    {
+        $documento = Documento::find($id);
 
-    /* public function loadView(){
-        $files = [];       
-        foreach(Storage::disk($this->disk)->files() as $file) {
-            $name = str_replace("$this->disk/","", $file);
-            $picture = "";
-            $type = Storage::disk($this->disk)->mimeType($name);
-            
-            if(strpos($type, "image")!==false){
-                $picture = asset(Storage::disk($this->disk)->url($name));
-            }
-            $downloadLink = route("download", $name);
-            $files [] =[
-                "picture" => $picture,
-                "name" => $name,
-                "link" => $downloadLink,
-                "size" => Storage::disk($this->disk)->size($name)
-            ];
+        if (!$documento) {
+            abort(404);
         }
-    return view('files', ["files" => $files]);
-    }*/
+
+        $ruta = storage_path('app/' . $documento->ruta);
+
+        return response()->download($ruta, $documento->nombre);
+    }
+
 
     /* public function cargarDocumento()
     {
@@ -219,9 +181,6 @@ class Evaluacion extends Component
 
         return response('', 404);
     }*/
-
-
-
 
     public function delete($id)
     {

@@ -6,7 +6,7 @@
         <div>
             <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
                 <span>Buscar: </span>
-                <input type="text" wire:model.live ="search"
+                <input type="text" wire:model.live="search"
                     class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
                 <div class="ml-auto">
                     @livewire('crear-prestamo')
@@ -104,9 +104,24 @@
                                 </div>
                             </td>
                             <td class="pl-2">
-                                <p class="relative px-5 text-center">
-                                    <!-- Agrega aquí los botones de acciones -->
-                                </p>
+                                <div class="flex space-x-2">
+                                    <a wire:click="verPago('{{ $prestamo->id }}')"
+                                        class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse">
+                                        <i class="far fa-eye"></i>
+                                        <span
+                                            class="group-hover:opacity-100  bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
+                                            Ver Prestamo
+                                        </span>
+                                    </a>
+                                    <a wire:click="delete({{ $prestamo->id }})"
+                                        class="group py-4 px-4 text-center rounded-md bg-red-300 font-bold text-white cursor-pointer hover:bg-red-400  hover:animate-pulse">
+                                        <i class="fas fa-trash"></i>
+                                        <span
+                                            class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
+                                            Eliminar
+                                        </span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -116,9 +131,81 @@
         @endif
     </div>
 
-    {{-- MODAL PARA EDITAR PRÉSTAMO --}}
+    {{-- MODAL VER PRÉSTAMO --}}
+    <x-dialog-modal wire:model="editando" wire:loading.attr="disabled">
+        <x-slot name="title" class="font-bold">
+            <h1 class="text-xl font-bold"></h1>
+        </x-slot>
+        <x-slot name="content">
 
+            <table class="w-full whitespace-nowrap">
+                <thead class="bg-slate-600 border-b font-bold text-white">
+                    <tr>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            Cuota</th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            Fecha de
+                            Pago</th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Pago
+                            x
+                            Cuota</th>
+                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="pl-2">
+                            
+                        </td>
+                        <td class="pl-2">
+                            
+                        </td>
+                        <td class="pl-2">
+                            
+                        </td>
+                        <td class="pl-2">
+                            
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </x-slot>
 
+        <x-slot name="footer">
+        </x-slot>
+    </x-dialog-modal>
 
+    @push('js')
+        <script>
+            Livewire.on('delete', id => {
+                console.log(id);
+                Swal.fire({
+                    title: '¿Estas seguro que deseas eliminar el prestamo?',
+                    text: "Esta acción no se puede revertir",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Borrar',
+                    cancelButtonText: 'Cancelar'
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('destroy', {
+                            kate: id[0]
+                        });
+                        Swal.fire(
+                            'Eliminado',
+                            'El prestamo ha sido eliminado',
+                            'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
 
 </div>

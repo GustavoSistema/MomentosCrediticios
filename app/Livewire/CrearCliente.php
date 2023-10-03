@@ -8,17 +8,18 @@ use Livewire\Component;
 class CrearCliente extends Component
 {
 
-    public $nombre, $estado, $apellido, $dni, $genero, $celular, $correo, $direccion;
+    public $nombre,  $apellido, $dni, $genero, $celular, $correo, $direccion;
     public $opcionesGenero = ['Masculino', 'Femenino', 'Otro'];
     public $open = false;
+    public $estado = 'Sin crédito';
 
     protected $rules = [
         'nombre' => 'required',
         'estado' => 'required',
         'apellido' => 'required',
-        'dni' => 'required',
+        'dni' => 'required|max:8',
         'genero' => 'required',
-        'celular' => 'required',
+        'celular' => 'required|max:9',
         'direccion' => 'required',
         'correo' => 'required|email',
     ];
@@ -41,10 +42,7 @@ class CrearCliente extends Component
             'celular' => $this->celular,
             'direccion' => $this->direccion,
             'correo' => $this->correo,
-
-
         ]);
-
         $this->reset(['open', 'nombre', 'apellido', 'dni', 'genero', 'celular', 'correo', 'direccion','estado']);
         $this->dispatch('render');
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'El cliente se creo satisfactoriamente', 'icono' => 'success']);

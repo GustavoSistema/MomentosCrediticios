@@ -28,9 +28,9 @@ class Evalua extends Model
     }
     public function Documento(): BelongsToMany
     {
-        return $this->belongsToMany(Documento::class, 'Documentos_Evaluacion', 'idEvaluacion', 'idDocumentos' );
+        return $this->belongsToMany(Documento::class, 'Documentos_Evaluacion', 'idEvaluacion', 'idDocumentos');
     }
-    
+
     /*public function documentosAdjuntos()
     {
         return $this->hasMany(DocumentoAdjunto::class, 'evaluacion_id');

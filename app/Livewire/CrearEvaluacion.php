@@ -35,7 +35,7 @@ class CrearEvaluacion extends Component
         'apecliente' => 'required',
         'dnicliente' => 'required|max:8',
         'celular' => 'required|max:9',
-        'email' => 'required',
+        'email' => 'required|email',
         'fecha' => 'required|date',
         'documentos.*' => 'required|file|mimes:pdf,docx|max:10240',
     ];

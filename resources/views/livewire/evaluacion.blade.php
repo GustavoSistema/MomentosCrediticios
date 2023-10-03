@@ -253,26 +253,24 @@
         </x-slot>
     </x-dialog-modal>
 
-    {{-- MODAL VER DOCUMENTOS --}}
+    {{-- MODAL PARA MOSTRAR LOS DOCUMENTOS --}}
     <x-dialog-modal wire:model="editando3" wire:loading.attr="disabled">
         <x-slot name="title" class="font-bold">
             <h1 class="text-xl font-bold">Carpeta de Documentos</h1>
         </x-slot>
-
         <x-slot name="content">
-            @if (isset($files))
-                @foreach ($files as $file)
-                    <tr>
-                        <td>
-                            @if ($file['picture'])
-                                <img src="{{ $file['picture'] }}">
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ $file['link'] }}" target="_blank">{{ $file['name'] }}</a>
-                        </td>
-                    </tr>
-                @endforeach
+            @if (!empty($documentos))
+                <ul>
+                    @foreach ($documentos as $documento)
+                        <li>
+                            <a href="{{ asset('storage/' . $documento->ruta) }}"
+                                target="_blank">{{ $documento->nombre }}</a>
+                            <a href="{{ route('descargar.documento', ['id' => $documento->id]) }}">Descargar</a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>No hay documentos disponibles.</p>
             @endif
         </x-slot>
 
@@ -312,6 +310,4 @@
             });
         </script>
     @endpush
-
-
 </div>

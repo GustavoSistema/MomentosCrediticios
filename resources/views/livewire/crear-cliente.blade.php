@@ -53,11 +53,6 @@
                 <x-input wire:model="direccion" type="text" class="w-full" />
                 <x-input-error for="direccion" />
             </div>
-            <div class="mb-4">
-                <x-label value="Estado:" />
-                <x-input wire:model="estado" type="text" class="w-full" />
-                <x-input-error for="estado" />
-            </div>
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button wire:click="resetForm" class="mx-2">
