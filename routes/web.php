@@ -42,9 +42,10 @@ Route::middleware([
     /*Route::get('/', [FilesController::class, 'loadView']);
     Route::post('/', [FilesController::class, 'storeFile']);
     Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');*/
+
     
-    //Route::get('descargar-documento/{nombre}', 'Evaluacion@descargarDocumento');
-    Route::get('/descargar-documento/{id}', 'Evaluacion@descargar')->name('descargar.documento');
+    
+    
 
 
 

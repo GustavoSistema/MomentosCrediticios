@@ -23,12 +23,13 @@ class Evaluacion extends Component
     public $nuevoEstado;
     public $evaluacionId;
     private $disk = "public";
-    public $documentos = [];
+    public $documentos;
     public $search = '';
     public $eva;
     public $files = [];
     use WithFileUploads;
     use WithPagination;
+
     #[On('render')]
 
     public function render()
@@ -128,59 +129,26 @@ class Evaluacion extends Component
         return Str::slug($name, '');
     }
 
-    public function verDocumento($evaluacionId)
+    public function verDocumento(Evalua $evaluacion)
     {
-        $evaluacion = Evalua::with('Documento')->find($evaluacionId);
-
-        // Verifica si la evaluación y sus documentos existen
-        if ($evaluacion && $evaluacion->Documento->isNotEmpty()) {
-            $this->editando3 = true;
-            $this->documentos = $evaluacion->Documento; // Establece los documentos para mostrarlos en el modal
-        }
-    }
-    
-    public function descargar($id)
-    {
-        $documento = Documento::find($id);
-
-        if (!$documento) {
-            abort(404);
-        }
-
-        $ruta = storage_path('app/' . $documento->ruta);
-
-        return response()->download($ruta, $documento->nombre);
+        $this->documentos = $evaluacion->Documento;
+        $this->editando3 = true;
     }
 
-
-    /* public function cargarDocumento()
-    {
-        $this->validate([
-            'documentoSeleccionado' => 'required|file|mimes:pdf|max:10240', // Puedes ajustar los tipos y el tamaño según tus necesidades
-        ]);
-
-        // Guardar el archivo en la carpeta correspondiente
-        $path = $this->documentoSeleccionado->store('documentos', $this->disk);
-
-        // Actualizar la base de datos o realizar cualquier otra acción necesaria
-        // ...
-
-        // Limpiar la propiedad después de cargar el documento
-        $this->documentoSeleccionado = null;
-
-        // Refrescar la vista
-        $this->dispatch('render');
-    }
     public function descargarDocumento($nombre)
     {
-        $archivo = storage_path("app/{$this->disk}/" . $nombre);
+        $archivo = storage_path("app/{$this->documento}/" . $nombre);
 
         if (file_exists($archivo)) {
             return response()->download($archivo);
         }
 
         return response('', 404);
-    }*/
+    }
+
+    public function descargarDocumentosEnCarpeta(Evalua $evaluacion)
+    {
+    }
 
     public function delete($id)
     {

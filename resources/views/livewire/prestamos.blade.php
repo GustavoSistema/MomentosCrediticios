@@ -134,44 +134,104 @@
     {{-- MODAL VER PRÉSTAMO --}}
     <x-dialog-modal wire:model="editando" wire:loading.attr="disabled">
         <x-slot name="title" class="font-bold">
-            <h1 class="text-xl font-bold"></h1>
+            @if ($prestamoSeleccionado)
+                <h1 class="text-xl font-bold">Reporte Detallado del prestamo # {{ $prestamoSeleccionado->id }}</h1>                
+            @endif
         </x-slot>
         <x-slot name="content">
+            @if ($prestamoSeleccionado)
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        
+                        <ul class="list-inside list-disc">
+                            <li>
+                                Cliente: {{ $prestamoSeleccionado->cliente->nombre }}
+                                {{ $prestamoSeleccionado->cliente->apellido }}
+                            </li>
+                            <li>
+                                Producto: {{ $prestamoSeleccionado->producto->nombre }}
+                            </li>
+                            <li>
+                                Monto de Crédito: {{ $prestamoSeleccionado->monto }}
+                            </li>
+                            <li>
+                                Interés de Crédito: {{ $prestamoSeleccionado->interes }}%
+                            </li>
+                            <li>
+                                Nro Cuotas: {{ $prestamoSeleccionado->cuotas }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        
+                        <ul class="list-inside list-disc">                            
+                            <li>
+                                Monto x Cuota: {{ $prestamoSeleccionado->vcuota }}
+                            </li>
+                            <li>
+                                Interés Crédito: {{ $prestamoSeleccionado->vinteres }}
+                            </li>
+                            <li>
+                                Monto Total: {{ $prestamoSeleccionado->mtotal }}
+                            </li>
+                            <li>
+                                Fecha Crédito: {{ $prestamoSeleccionado->fecha }}
+                            </li>
+                        </ul>
+                    </div>
+                </div><br/>
 
-            <table class="w-full whitespace-nowrap">
-                <thead class="bg-slate-600 border-b font-bold text-white">
-                    <tr>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Cuota</th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Fecha de
-                            Pago</th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">Pago
-                            x
-                            Cuota</th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                        <td class="pl-2">
-                            
-                        </td>
-                        <td class="pl-2">
-                            
-                        </td>
-                        <td class="pl-2">
-                            
-                        </td>
-                        <td class="pl-2">
-                            
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+                <table class="w-full whitespace-nowrap">
+                    <thead class="bg-slate-600 border-b font-bold text-white">
+                        <tr>
+                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                                Nro Cuota</th>
+                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                                Forma de Pago</th>
+                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                                Fecha de
+                                Pago</th>
+                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                                Pago x
+                                Cuota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for ($i = 1; $i <= $prestamoSeleccionado->cuotas; $i++)
+                            <tr>
+                                <td class="pl-2">
+                                    <div class="flex items-center">
+                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                            {{ $i }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-2">
+                                    <div class="flex items-center">
+                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                            {{ $prestamoSeleccionado->formapago->nombre }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-2">
+                                    <div class="flex items-center">
+                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                            {{ $prestamoSeleccionado->fecha }}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="pl-2">
+                                    <div class="flex items-center">
+                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
+                                            {{ $prestamoSeleccionado->vcuota }}
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endfor
+                    </tbody>
+                </table>
+            @endif
         </x-slot>
 
         <x-slot name="footer">

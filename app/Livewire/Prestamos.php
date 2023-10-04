@@ -14,8 +14,14 @@ class Prestamos extends Component
     public $search = '';
     public $editando;
     public $prestamoSeleccionado;
+    public $cuotas2 = [];
+
+    public $prestamo;
+
     use WithPagination;
     #[On('render')]
+
+
 
     public function render()
     {
@@ -36,10 +42,18 @@ class Prestamos extends Component
 
     public function verPago($id)
     {
-        $this->prestamoSeleccionado = Prestamo::with('cliente', 'producto', 'formaPago')
-        ->findOrFail($id);
+        $this->prestamoSeleccionado = Prestamo::find($id);
+        $this->dispatch('mostrarPrestamo', $id);
         $this->editando = true;
     }
+
+    public function cargarDetallesPrestamo($id)
+    {
+        $this->prestamoSeleccionado = Prestamo::with('cuotas')->find($id);
+        $this->editando = true;
+    }
+
+
 
     public function delete($id)
     {
