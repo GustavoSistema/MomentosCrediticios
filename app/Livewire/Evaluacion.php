@@ -27,6 +27,7 @@ class Evaluacion extends Component
     public $search = '';
     public $eva;
     public $files = [];
+    public $nuevosDocumentos;
     use WithFileUploads;
     use WithPagination;
 
@@ -40,6 +41,76 @@ class Evaluacion extends Component
         })->with('Documento')->paginate(10);
         return view('livewire.evaluacion', compact('evaluacion', 'talleres'));
     }
+    //para ver los documentos dentro del modal
+    public function verDocumento(Evalua $evaluacion)
+    {
+        $this->documentos = $evaluacion->Documento;
+        $this->editando3 = true;
+    }
+
+    public function editarDocumentos()
+    {
+        $this->validate([
+            'nuevosDocumentos.*' => 'nullable|mimes:pdf,docx|max:2048', // Asegúrate de configurar las reglas de validación adecuadas
+        ]);
+
+        if (!empty($this->nuevosDocumentos)) {
+            foreach ($this->nuevosDocumentos as $documento) {
+                // Guarda los nuevos documentos en el almacenamiento y actualiza la base de datos según tus necesidades
+                $nombreArchivo = time() . '-' . $documento->getClientOriginalName();
+                $rutaArchivo = $documento->storeAs('public/DocumentosEvaluacion', $nombreArchivo);
+
+                // Aquí puedes agregar la lógica para actualizar la base de datos
+                // Ejemplo:
+                $documentoGuardado = Documento::create([
+                    'nombre' => $nombreArchivo,
+                    'ruta' => $rutaArchivo,
+                    'extension' => $documento->extension(),
+                ]);
+
+                // Agrega el nuevo documento a la lista existente de documentos
+                $this->documentos[] = $documentoGuardado;
+            }
+
+            // Limpia el campo de nuevos documentos después de guardarlos
+            $this->nuevosDocumentos = [];
+        }
+        // Cierra el modal después de guardar los documentos
+        $this->editando3 = false;
+    }
+
+    //para descargar individualmente
+    public function descargarDocumento($nombre)
+    {
+        $archivo = storage_path("app/{$this->documento}/" . $nombre);
+
+        if (file_exists($archivo)) {
+            return response()->download($archivo);
+        }
+
+        return response('', 404);
+    }
+    //descargar todos los documentos
+    public function descargarDocumentos(Evalua $evaluacion)
+    {
+        $archivos = $evaluacion->Documento->pluck('ruta')->toArray();
+        $zipFileName = "documentos_{$evaluacion->id}.zip";
+        $archivo2 = storage_path("app/{$this->documento}/{$zipFileName}");
+
+        $zip = new \ZipArchive();
+        if ($zip->open($archivo2, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($archivos as $archivo) {
+                $archivoPath = storage_path("app/{$this->documento}/{$archivo}");
+                $nombreArchivo = pathinfo($archivoPath, PATHINFO_BASENAME);
+                $zip->addFile($archivoPath, $nombreArchivo);
+            }
+            $zip->close();
+
+            return response()->download($archivo2)->deleteFileAfterSend();
+        }
+        return response('', 404);
+    }
+
     public function editEstado($id)
     {
         $evaluacion = Evalua::find($id);
@@ -50,7 +121,6 @@ class Evaluacion extends Component
             $this->editando = true;
         }
     }
-
     public function actualizarEstado()
     {
         $this->validate([
@@ -67,7 +137,6 @@ class Evaluacion extends Component
             }
         }
     }
-
     public function edit($id)
     {
         $this->resetForm(); // Limpia los campos antes de la edición
@@ -99,7 +168,6 @@ class Evaluacion extends Component
             'celular' => 'required|max:9',
             'email' => 'required',
             'fecha' => 'required|date',
-            //'documento' => 'required',
         ]);
 
         if ($this->evaluacionId) {
@@ -116,6 +184,7 @@ class Evaluacion extends Component
                     'fecha' => $this->fecha,
                     //'documento' => $this->documento,
                 ]);
+
                 $this->resetForm();
                 $this->editando2 = false;
                 $this->dispatch('render');
@@ -129,26 +198,6 @@ class Evaluacion extends Component
         return Str::slug($name, '');
     }
 
-    public function verDocumento(Evalua $evaluacion)
-    {
-        $this->documentos = $evaluacion->Documento;
-        $this->editando3 = true;
-    }
-
-    public function descargarDocumento($nombre)
-    {
-        $archivo = storage_path("app/{$this->documento}/" . $nombre);
-
-        if (file_exists($archivo)) {
-            return response()->download($archivo);
-        }
-
-        return response('', 404);
-    }
-
-    public function descargarDocumentosEnCarpeta(Evalua $evaluacion)
-    {
-    }
 
     public function delete($id)
     {

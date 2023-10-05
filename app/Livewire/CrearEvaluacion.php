@@ -61,13 +61,6 @@ class CrearEvaluacion extends Component
         $this->validate();
         $documentoPaths = [];
         $dniFolder = $this->dnicliente . '_' . $this->formatName($this->nomcliente) . $this->formatName($this->apecliente);
-        //dd($this->documentos);
-        /*foreach ($this->documentos as $documento) {
-            $extension = $documento->getMimeType();
-           // dd($extension);
-            $documentoPath = $documento->storeAs("public/DocumentosEvaluacion",$dniFolder);
-            $documentoPaths[] = $documentoPath;
-        }*/
         $eval = Evalua::create([
             'idTaller' => $this->taller,
             'nomcliente' => $this->nomcliente,
@@ -107,6 +100,8 @@ class CrearEvaluacion extends Component
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'La evaluacion se envio correctamente', 'icono' => 'success']);
         $this->borradocumento = rand();
     }
+
+    
     public function guardaDocumento($documento){
         
     }
