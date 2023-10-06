@@ -27,7 +27,7 @@ class Evaluacion extends Component
     public $search = '';
     public $eva;
     public $files = [];
-    public $nuevosDocumentos;
+    public $nuevosDocumentos = [];
     use WithFileUploads;
     use WithPagination;
 
@@ -47,36 +47,18 @@ class Evaluacion extends Component
         $this->documentos = $evaluacion->Documento;
         $this->editando3 = true;
     }
-
-    public function editarDocumentos()
+    //para eliminar documentos del modal
+    public function eliminarDocumento($documentoId)
     {
-        $this->validate([
-            'nuevosDocumentos.*' => 'nullable|mimes:pdf,docx|max:2048', // Asegúrate de configurar las reglas de validación adecuadas
-        ]);
-
-        if (!empty($this->nuevosDocumentos)) {
-            foreach ($this->nuevosDocumentos as $documento) {
-                // Guarda los nuevos documentos en el almacenamiento y actualiza la base de datos según tus necesidades
-                $nombreArchivo = time() . '-' . $documento->getClientOriginalName();
-                $rutaArchivo = $documento->storeAs('public/DocumentosEvaluacion', $nombreArchivo);
-
-                // Aquí puedes agregar la lógica para actualizar la base de datos
-                // Ejemplo:
-                $documentoGuardado = Documento::create([
-                    'nombre' => $nombreArchivo,
-                    'ruta' => $rutaArchivo,
-                    'extension' => $documento->extension(),
-                ]);
-
-                // Agrega el nuevo documento a la lista existente de documentos
-                $this->documentos[] = $documentoGuardado;
-            }
-
-            // Limpia el campo de nuevos documentos después de guardarlos
-            $this->nuevosDocumentos = [];
+        $documento = Documento::find($documentoId);
+        if ($documento) {
+            $documento->delete();            
+             $rutaDocumento = $documento->ruta;
+            Storage::delete($rutaDocumento);
+            $this->documentos = $this->documentos->reject(function ($doc) use ($documentoId) {
+                return $doc->id === $documentoId;
+            });
         }
-        // Cierra el modal después de guardar los documentos
-        $this->editando3 = false;
     }
 
     //para descargar individualmente

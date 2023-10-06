@@ -7,6 +7,9 @@ use App\Models\prestamo;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Carbon\Carbon;
+use PDF;
+
 
 class Prestamos extends Component
 {
@@ -15,13 +18,12 @@ class Prestamos extends Component
     public $editando;
     public $prestamoSeleccionado;
     public $cuotas2 = [];
+    public $fechaInicioCuota;
 
     public $prestamo;
 
     use WithPagination;
     #[On('render')]
-
-
 
     public function render()
     {
@@ -39,7 +41,6 @@ class Prestamos extends Component
         return view('livewire.prestamos', compact('prestamos'));
     }
 
-
     public function verPago($id)
     {
         $this->prestamoSeleccionado = Prestamo::find($id);
@@ -47,12 +48,11 @@ class Prestamos extends Component
         $this->editando = true;
     }
 
-    public function cargarDetallesPrestamo($id)
+    /*public function cargarDetallesPrestamo($id)
     {
         $this->prestamoSeleccionado = Prestamo::with('cuotas')->find($id);
         $this->editando = true;
-    }
-
+    }*/
 
 
     public function delete($id)
@@ -67,5 +67,9 @@ class Prestamos extends Component
         //dd($kate);
         prestamo::find($kate)->delete();
         $this->render();
+    }
+
+    public function imprimirReporte($id)
+    {
     }
 }

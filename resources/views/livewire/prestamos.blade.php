@@ -133,110 +133,77 @@
 
     {{-- MODAL VER PRÉSTAMO --}}
     <x-dialog-modal wire:model="editando" wire:loading.attr="disabled">
-        <x-slot name="title" class="font-bold">
+        <x-slot name="title" class="font-bold text-2xl mb-4 flex justify-between items-center">
             @if ($prestamoSeleccionado)
-                <h1 class="text-xl font-bold">Reporte Detallado del prestamo # {{ $prestamoSeleccionado->id }}</h1>                
+                <button id="printModalButton" wire:click="imprimirReporte('{{ $prestamoSeleccionado->id }}')"
+                    class="flex items-center ml-auto">
+                    <i class="fas fa-print text-indigo-500"></i>
+                </button>
+                <span>Reporte Detallado del préstamo # {{ $prestamoSeleccionado->id }}</span>
             @endif
         </x-slot>
         <x-slot name="content">
             @if ($prestamoSeleccionado)
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        
-                        <ul class="list-inside list-disc">
-                            <li>
-                                Cliente: {{ $prestamoSeleccionado->cliente->nombre }}
-                                {{ $prestamoSeleccionado->cliente->apellido }}
+                    <div class="mb-4">
+                        <ul class="list-inside list-disc ml-4">
+                            <li><strong>Cliente:</strong> {{ $prestamoSeleccionado->cliente->nombre }}
+                                {{ $prestamoSeleccionado->cliente->apellido }}</li>
+                            <li><strong>Producto:</strong> {{ $prestamoSeleccionado->producto->nombre }}</li>
+                            <li><strong>Monto de Crédito:</strong> {{ $prestamoSeleccionado->monto }}</li>
+                            <li><strong>Interés de Crédito:</strong> {{ $prestamoSeleccionado->interes }}%</li>
+                            <li><strong>Nro Cuotas:</strong> {{ $prestamoSeleccionado->cuotas }}</li>
+                        </ul>
+                    </div>
+                    <div class="mb-4">
+                        <ul class="list-inside list-disc ml-4">
+                            <li><strong>Monto x Cuota:</strong>
+                                {{ $prestamoSeleccionado->vcuota }}
                             </li>
-                            <li>
-                                Producto: {{ $prestamoSeleccionado->producto->nombre }}
+                            <li><strong>Interés Crédito:</strong>
+                                {{ $prestamoSeleccionado->vinteres }}
                             </li>
-                            <li>
-                                Monto de Crédito: {{ $prestamoSeleccionado->monto }}
+                            <li><strong>Monto Total:</strong>
+                                {{ $prestamoSeleccionado->mtotal }}
                             </li>
-                            <li>
-                                Interés de Crédito: {{ $prestamoSeleccionado->interes }}%
-                            </li>
-                            <li>
-                                Nro Cuotas: {{ $prestamoSeleccionado->cuotas }}
+                            <li><strong>Fecha Crédito:</strong>
+                                {{ $prestamoSeleccionado->fecha }}
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        
-                        <ul class="list-inside list-disc">                            
-                            <li>
-                                Monto x Cuota: {{ $prestamoSeleccionado->vcuota }}
-                            </li>
-                            <li>
-                                Interés Crédito: {{ $prestamoSeleccionado->vinteres }}
-                            </li>
-                            <li>
-                                Monto Total: {{ $prestamoSeleccionado->mtotal }}
-                            </li>
-                            <li>
-                                Fecha Crédito: {{ $prestamoSeleccionado->fecha }}
-                            </li>
-                        </ul>
-                    </div>
-                </div><br/>
-
-                <table class="w-full whitespace-nowrap">
-                    <thead class="bg-slate-600 border-b font-bold text-white">
-                        <tr>
-                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                                Nro Cuota</th>
-                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                </div>
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border border-gray-300">
+                                Nro Cuotas</th>
+                            <th class="py-2 px-4 border border-gray-300">
                                 Forma de Pago</th>
-                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
+                            <th class="py-2 px-4 border border-gray-300">
                                 Fecha de
                                 Pago</th>
-                            <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                                Pago x
-                                Cuota</th>
+                            <th class="py-2 px-4 border border-gray-300">
+                                Pago</th>
                         </tr>
                     </thead>
                     <tbody>
                         @for ($i = 1; $i <= $prestamoSeleccionado->cuotas; $i++)
-                            <tr>
-                                <td class="pl-2">
-                                    <div class="flex items-center">
-                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                            {{ $i }}
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="pl-2">
-                                    <div class="flex items-center">
-                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                            {{ $prestamoSeleccionado->formapago->nombre }}
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="pl-2">
-                                    <div class="flex items-center">
-                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                            {{ $prestamoSeleccionado->fecha }}
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="pl-2">
-                                    <div class="flex items-center">
-                                        <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                            {{ $prestamoSeleccionado->vcuota }}
-                                        </p>
-                                    </div>
-                                </td>
+                            <tr class="{{ $i % 2 == 0 ? 'bg-gray-200' : 'bg-white' }}">
+                                <td class="border border-gray-300 py-2 px-12">{{ $i }}</td>
+                                <td class="border border-gray-300 py-2 px-12">
+                                    {{ $prestamoSeleccionado->formapago->nombre }}</td>
+                                <td class="border border-gray-300 py-2 px-12">{{ $prestamoSeleccionado->fecha }}</td>
+                                <td class="border border-gray-300 py-2 px-12">{{ $prestamoSeleccionado->vcuota }}</td>
                             </tr>
                         @endfor
                     </tbody>
                 </table>
             @endif
         </x-slot>
-
         <x-slot name="footer">
         </x-slot>
     </x-dialog-modal>
+
 
     @push('js')
         <script>
