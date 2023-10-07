@@ -1,0 +1,38 @@
+/* Estilos personalizados */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    overflow-y: auto;
+    padding: 20px;
+    transition: left 0.3s; /* Agregar una transición suave para la apertura/cierre */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+.submenu ul {
+    display: none;
+}
+
+.submenu:hover ul {
+    display: block;
+}
+
+

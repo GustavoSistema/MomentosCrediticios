@@ -38,15 +38,11 @@ Route::middleware([
     Route::get('/prestamos', Prestamos::class)->name('prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
+    Route::get('/inicio', Evaluacion::class)->name('inicio');
+    Route::get('/reportes', Evaluacion::class)->name('reportes');
 
     /*Route::get('/', [FilesController::class, 'loadView']);
     Route::post('/', [FilesController::class, 'storeFile']);
     Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');*/
-
-    
-    
-    
-
-
 
  });
