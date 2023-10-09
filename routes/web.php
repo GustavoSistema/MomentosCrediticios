@@ -41,6 +41,7 @@ Route::middleware([
     Route::get('/inicio', Evaluacion::class)->name('inicio');
     Route::get('/reportes', Evaluacion::class)->name('reportes');
 
+
     /*Route::get('/', [FilesController::class, 'loadView']);
     Route::post('/', [FilesController::class, 'storeFile']);
     Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');*/

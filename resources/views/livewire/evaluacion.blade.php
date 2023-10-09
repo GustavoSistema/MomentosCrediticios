@@ -1,7 +1,7 @@
 <div>
     <div class="mx-8 rounded-md mb-4">
         <div class="col-md-6 text-center">
-            <h3 style="font-size: 2.5rem; font-weight: bold;">Registro de Evaluación</h3>
+            <h3 style="font-size: 1.5rem; font-weight: bold;">REGISTRO DE EVALUACIÓN</h3>
         </div>
         <div>
             <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
