@@ -4,6 +4,7 @@ use App\Http\Controllers\FilesController;
 use App\Livewire\Clientes;
 use App\Livewire\Cobranzas;
 use App\Livewire\Evaluacion;
+use App\Livewire\Inicio;
 use App\Livewire\Prestamos;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::middleware([
     Route::get('/prestamos', Prestamos::class)->name('prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
-    Route::get('/inicio', Evaluacion::class)->name('inicio');
+    Route::get('/inicio', Inicio::class)->name('inicio');
     Route::get('/reportes', Evaluacion::class)->name('reportes');
 
 

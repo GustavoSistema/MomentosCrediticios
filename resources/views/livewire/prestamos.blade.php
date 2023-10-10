@@ -1,9 +1,9 @@
 <div>
-    <div class="mx-8 rounded-md">
-        <div class="col-md-6 text-center">
-            <h3 style="font-size: 2.5rem; font-weight: bold;">Registro de préstamos</h3>
+    <div class="mx-8 rounded-md mb-4">
+        <div class="text-xl font-semibold mt-8">
+            <h3 style="font-size: 1.5rem; font-weight: bold;">REGISTRO DE PRESTAMOS</h3>
         </div>
-        <div>
+        <div class="mt-2">
             <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
                 <span>Buscar: </span>
                 <input type="text" wire:model.live="search"

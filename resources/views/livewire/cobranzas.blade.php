@@ -1,9 +1,18 @@
 <div>
-    <div class="mx-8 rounded-md">
-        <div class="col-md-6 text-center">
-            <h3 style="font-size: 2.5rem; font-weight: bold;">Registro de Cobranzas</h3>
+    <div class="mx-8 rounded-md mb-4">
+        <div class="text-xl font-semibold mt-8">
+            <h3 style="font-size: 1.5rem; font-weight: bold;">REGISTRO DE COBRANZAS</h3>
         </div>
-        @livewire('realizar-pago')
+        <div class="mt-2">
+            <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
+                <span>Buscar: </span>
+                <input type="text" wire:model.live="search"
+                    class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
+                <div class="ml-auto">
+                    @livewire('realizar-pago')
+                </div>
+            </div>
+        </div>
     </div>
     <div class="mx-8 rounded-md">
         @if (isset($cobranzas))
