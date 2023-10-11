@@ -140,7 +140,11 @@
                                             Editar
                                         </span>
                                     </a>
+
                                     
+
+                                    @hasrole('cliente')
+
                                     <a wire:click="delete({{ $evalua->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-red-300 font-bold text-white cursor-pointer hover:bg-red-400  hover:animate-pulse">
                                         <i class="fas fa-trash"></i>
@@ -148,7 +152,12 @@
                                             class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
                                             Eliminar
                                         </span>
+
                                     </a>                                    
+
+                                    </a>
+                                    @endhasrole
+
                                 </div>
                             </td>
                         </tr>
