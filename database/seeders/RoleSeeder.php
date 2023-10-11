@@ -15,6 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
          $role1 = Role::create(['name' => 'admin']);
          $role2 = Role::create(['name' => 'cliente']);
          $role3 = Role::create(['name' => 'taller']);
@@ -22,7 +23,7 @@ class RoleSeeder extends Seeder
          Permission::create(['name' => 'admin.dashboard']);
          Permission::create(['name' => 'admin.clientes']);
          Permission::create(['name' => 'admin.prestamos']);
-         Permission::create(['name' => 'admin.cobranzas']);
+         Permission::create(['name' => 'admin.cobranzas']);*/
 
 
 

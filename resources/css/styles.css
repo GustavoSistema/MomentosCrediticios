@@ -47,3 +47,11 @@
 .bg-gray-333 {
     background-color: #333; 
 }
+
+/*para login fondo*/
+.background-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Asegura que el contenedor ocupa toda la altura de la pantalla */
+}

@@ -1,16 +1,18 @@
 <div>
     <div class="mx-8 rounded-md mb-4">
         <div class="text-xl font-semibold mt-8">
-            <h3 style="font-size: 1.5rem; font-weight: bold;">CREAR EVALUACIÓN</h3>
+            <h3 style="font-size: 1.5rem; font-weight: bold;">REGISTRO DE EVALUACIÓN</h3>
         </div>
         <div class="mt-2">
             <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
                 <span>Buscar: </span>
                 <input wire:model.live="search"
                     class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
+                {{--
                 <div class="ml-auto">
                     @livewire('crear-evaluacion')
                 </div>
+                --}}
             </div>
         </div>
     </div>
@@ -104,7 +106,6 @@
                                 <div class="flex space-x-2">
                                     @hasrole('cliente')
                                     @endhasrole
-                                    {{--
                                     <a wire:click="descargarDocumentos({{ $evalua }})"
                                         class="group py-4 px-4 text-center rounded-md bg-blue-300 font-bold text-white cursor-pointer hover:bg-blue-400  hover:animate-pulse">
                                         <i class="fas fa-download"></i>
@@ -113,7 +114,6 @@
                                             Descargar Doc
                                         </span>
                                     </a>
-                                    --}}
                                     <a wire:click="verDocumento({{ $evalua }})"
                                         class="group py-4 px-4 text-center rounded-md bg-indigo-300 font-bold text-white cursor-pointer hover:bg-indigo-400  hover:animate-pulse">
                                         <i class="fas fa-file"></i>
@@ -121,8 +121,7 @@
                                             class="group-hover:opacity-100  bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
                                             Documentos
                                         </span>
-                                    </a> 
-                                    {{--                                 
+                                    </a>
                                     <a wire:click="editEstado({{ $evalua->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-lime-300 font-bold text-white cursor-pointer hover:bg-lime-400 hover:animate-pulse">
                                         <i class="far fa-eye"></i>
@@ -131,7 +130,6 @@
                                             Estado
                                         </span>
                                     </a>
-                                    --}}  
                                     <a wire:click="edit({{ $evalua->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-yellow-300 font-bold text-white cursor-pointer hover:bg-yellow-400 hover:animate-pulse">
                                         <i class="fas fa-edit"></i>
@@ -140,7 +138,7 @@
                                             Editar
                                         </span>
                                     </a>
-                                    
+
                                     <a wire:click="delete({{ $evalua->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-red-300 font-bold text-white cursor-pointer hover:bg-red-400  hover:animate-pulse">
                                         <i class="fas fa-trash"></i>
@@ -148,7 +146,7 @@
                                             class="group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2-translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
                                             Eliminar
                                         </span>
-                                    </a>                                    
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -171,15 +169,16 @@
                             <img alt="gallery" class="mx-auto flex object-cover object-center w-15 h-15 rounded-lg"
                                 src="/images/{{ $fil->extension }}.png">
                             <div class="block">
-                                <p class="truncate text-sm">{{ $fil->nombre }}</p>                                                                
-                            </div>    
+                                <p class="truncate text-sm">{{ $fil->nombre }}</p>
+                            </div>
                             <div class="flex flex-row justify-center text-center">
                                 <a class="group max-w-max relative mx-1 flex flex-col items-center justify-center rounded-full border border-gray-500 p-1 text-gray-500 hover:bg-gray-200 hover:text-gray-600"
                                     href="#">
                                     <!-- Text/Icon goes here -->
                                     <p class="flex justify-center items-center"><i class="fas fa-info-circle"></i></p>
                                     <!-- Tooltip here -->
-                                    <div class="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] absolute bottom-0 mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 z-10">
+                                    <div
+                                        class="[transform:perspective(50px)_translateZ(0)_rotateX(10deg)] group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] absolute bottom-0 mb-6 origin-bottom transform rounded text-white opacity-0 transition-all duration-300 group-hover:opacity-100 z-10">
                                         <div class="flex w-56 flex-col items-center">
                                             <div class="rounded bg-gray-900 p-2 text-xs text-center shadow-lg">
                                                 Información:
@@ -191,21 +190,20 @@
                                 <a wire:click="descargarDocumento('{{ $fil->ruta }}')"><i
                                         class="fas fa-download mt-1 mx-2 hover:text-indigo-400"></i>
                                 </a>
-                                
+
                                 <a wire:click="eliminarDocumento({{ $fil->id }})">
                                     <i class="fas fa-trash mt-1 mx-2 hover:text-red-400"></i>
                                 </a>
-                            </div>                      
-                        </div>    
-                                            
-                    @endforeach                                       
-                @endif                                
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
             <h1 class="font-semibold sm:text-lg text-gray-900">
                 Editar documentos:
             </h1>
             <input wire:model="" type="file" multiple accept=".pdf,.docx" wire:change="($event.target.files)" />
-            
+
         </x-slot>
         <x-slot name="footer">
             <x-button wire:click="" wire:loading.attr="disabled" wire:target="">
@@ -347,7 +345,7 @@
             });
         </script>
     @endpush
-    
+
 
 
 </div>

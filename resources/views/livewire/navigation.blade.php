@@ -23,7 +23,6 @@
 
             <a href="{{ route('inicio') }}">Inicio</a>
         </button>
-
         <button
             class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
             <svg class="fill-stroke" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -37,7 +36,6 @@
             </svg>
             <p class="text-base leading-4 ">Usuarios</p>
         </button>
-
         <button
             class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,10 +79,15 @@
         <div id="menu1" class="hidden flex justify-start flex-col items-start pb-5 ">
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-user-pen"></i>
-                <a href="{{ route('evaluacion') }}">Evaluación</a>
+                <i class="fa-solid fa-user-plus"></i>
+                <a href="{{ route('evaluacion') }}">Crear Evaluación</a>
             </button>
-        </div>
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                <i class="fa-solid fa-user-pen"></i>
+                <a href="{{ route('ver-evaluacion') }}">Ver Evaluación</a>
+            </button>
+        </div>       
     </div>
 
     <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
@@ -106,12 +109,32 @@
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
                 <i class="fa-sharp fa-solid fa-landmark"></i>
-                <a href="{{ route('prestamos') }}">Préstamos</a>
+                <a href="{{ route('admin.prestamos') }}">Préstamos</a>
             </button>
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
                 <i class="fas fa-dollar-sign"></i>
                 <a href="{{ route('cobranzas') }}">Cobranzas</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+
+        <button onclick="showMenu4(true)"
+            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="text-sm leading-5 uppercase">Credito</p>
+            <svg id="icon4" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div id="menu4" class="hidden flex justify-start flex-col items-start pb-5 ">
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                <i class="fa-solid fa-ticket"></i>
+                <a href="{{ route('evaluacion') }}">Ver Credito</a>
             </button>
         </div>
     </div>
@@ -130,39 +153,29 @@
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
                 <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4 ">Messages</a>
+                <a class="text-base leading-4 ">Reporte General</a>
             </button>
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
                 <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Security</a>
+                <a class="text-base leading-4  ">Deudas</a>
             </button>
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-52">
                 <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Settings</a>
+                <a class="text-base leading-4  ">Pagos Completos</a>
             </button>
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
                 <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Notifications</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Passwords</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Goals</a>
+                <a class="text-base leading-4  ">Pagos Pendientes</a>
             </button>
         </div>
     </div>
 
-    <!-- Settings Dropdown -->
     
 </div>
+
 
 <script>
     let icon1 = document.getElementById("icon1");
@@ -184,6 +197,13 @@
     const showMenu3 = () => {
         icon3.classList.toggle("rotate-180");
         menu3.classList.toggle("hidden");
+    };
+
+    let icon4 = document.getElementById("icon4");
+    let menu4 = document.getElementById("menu4");
+    const showMenu4 = () => {
+        icon4.classList.toggle("rotate-180");
+        menu4.classList.toggle("hidden");
     };
 
     let Main = document.getElementById("Main");

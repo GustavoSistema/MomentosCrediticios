@@ -6,6 +6,7 @@ use App\Livewire\Cobranzas;
 use App\Livewire\Evaluacion;
 use App\Livewire\Inicio;
 use App\Livewire\Prestamos;
+use App\Livewire\VerEvaluacion;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,14 +20,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
+});*/
+
+Route::get('/', function () {
+    return redirect()->to('/login');
 });
+
+Route::get('phpmyinfo', function () {
+        phpinfo();
+    })->name('phpmyinfo');
+    
+
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -36,11 +48,12 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/clientes', Clientes::class)->name('clientes');
-    Route::get('/prestamos', Prestamos::class)->name('prestamos');
+    Route::get('/prestamos', Prestamos::class)->middleware('can:admin.prestamos')->name('admin.prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
     Route::get('/inicio', Inicio::class)->name('inicio');
     Route::get('/reportes', Evaluacion::class)->name('reportes');
+    Route::get('/ver-evaluacion', VerEvaluacion::class)->name('ver-evaluacion');
 
 
     /*Route::get('/', [FilesController::class, 'loadView']);
