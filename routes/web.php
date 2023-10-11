@@ -35,8 +35,8 @@ Route::middleware([
         
     })->name('dashboard');
 
-    Route::get('/clientes', Clientes::class)->name('clientes');
-    Route::get('/prestamos', Prestamos::class)->name('prestamos');
+    Route::get('/clientes', Clientes::class)->middleware('can:admin.clientes')->name('admin.clientes');
+    Route::get('/prestamos', Prestamos::class)->middleware('can:admin.prestamos')->name('admin.prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
     Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
     Route::get('/inicio', Inicio::class)->name('inicio');
