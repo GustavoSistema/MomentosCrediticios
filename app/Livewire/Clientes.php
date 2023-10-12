@@ -97,7 +97,8 @@ class Clientes extends Component
                 // Limpia los campos y cierra el modal de edición
                 $this->resetForm();
                 $this->editando = false;
-                $this->dispatch('alert', 'Cliente actualizado con éxito');
+                $this->dispatch('render');
+                $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'El Cliente se actualizo correctamente', 'icono' => 'success']);
             }
         }
     }

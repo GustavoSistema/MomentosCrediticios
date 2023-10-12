@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class CrearEvaluacion extends Component
 {
     public $open = false;
-    public $taller, $nomcliente, $apecliente, $dnicliente, $celular, $email, $fecha;
+    public $taller, $nomcliente, $apecliente, $dnicliente, $fecha;
     public $documento;
     public $borradocumento;
     public $estado;
@@ -34,8 +34,6 @@ class CrearEvaluacion extends Component
         'nomcliente' => 'required',
         'apecliente' => 'required',
         'dnicliente' => 'required|max:8',
-        'celular' => 'required|max:9',
-        'email' => 'required|email',
         'fecha' => 'required|date',
         'documentos.*' => 'required|file|mimes:pdf,docx|max:10240',
     ];
@@ -66,8 +64,6 @@ class CrearEvaluacion extends Component
             'nomcliente' => $this->nomcliente,
             'apecliente' => $this->apecliente,
             'dnicliente' => $this->dnicliente,
-            'celular' => $this->celular,
-            'email' => $this->email,
             'fecha' => $this->fecha,
             'documentos' => json_encode($documentoPaths),
             'estado' => 'Por Revisar',
@@ -131,8 +127,6 @@ class CrearEvaluacion extends Component
         $this->nomcliente = '';
         $this->apecliente = '';
         $this->dnicliente = '';
-        $this->celular = '';
-        $this->email = '';
         $this->fecha = '';
         $this->borradocumento = null;
         $this->documentos = [];

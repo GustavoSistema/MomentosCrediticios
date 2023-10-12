@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 class Evaluacion extends Component
 {
-    public $taller, $nomcliente, $apecliente, $dnicliente, $celular, $email, $fecha, $documento;
+    public $taller, $nomcliente, $apecliente, $dnicliente, $fecha, $documento;
     public $estados = ['Por Revisar', 'Revisado', 'Observado'];
     public $editando;
     public $editando2;
@@ -130,10 +130,7 @@ class Evaluacion extends Component
             $this->nomcliente = $evaluacion->nomcliente;
             $this->apecliente = $evaluacion->apecliente;
             $this->dnicliente = $evaluacion->dnicliente;
-            $this->celular = $evaluacion->celular;
-            $this->email = $evaluacion->email;
             $this->fecha = $evaluacion->fecha;
-            $this->email = $evaluacion->email;
             //$this->documento = $evaluacion->documento;
 
             $this->editando2 = true;
@@ -147,8 +144,6 @@ class Evaluacion extends Component
             'nomcliente' => 'required',
             'apecliente' => 'required',
             'dnicliente' => 'required|max:8',
-            'celular' => 'required|max:9',
-            'email' => 'required',
             'fecha' => 'required|date',
         ]);
 
@@ -161,8 +156,6 @@ class Evaluacion extends Component
                     'nomcliente' => $this->nomcliente,
                     'apecliente' => $this->apecliente,
                     'dnicliente' => $this->dnicliente,
-                    'celular' => $this->celular,
-                    'email' => $this->email,
                     'fecha' => $this->fecha,
                     //'documento' => $this->documento,
                 ]);
@@ -202,8 +195,6 @@ class Evaluacion extends Component
         $this->nomcliente = '';
         $this->apecliente = '';
         $this->dnicliente = '';
-        $this->celular = '';
-        $this->email = '';
         $this->fecha = '';
         $this->documento = null;
     }

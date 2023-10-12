@@ -134,7 +134,32 @@
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
                 <i class="fa-solid fa-ticket"></i>
-                <a href="{{ route('evaluacion') }}">Ver Credito</a>
+                <a href="{{ route('inicio') }}">Ver Credito</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+
+        <button onclick="showMenu5(true)"
+            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="text-sm leading-5 uppercase">TABLAS</p>
+            <svg id="icon5" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div id="menu5" class="hidden flex justify-start flex-col items-start pb-5 ">
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                <i class="fa-solid fa-car"></i>
+                <a href="{{ route('talleres') }}">Talleres</a>
+            </button>
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                <i class="fa-solid fa-toolbox"></i>
+                <a href="{{ route('productos') }}">Productos</a>
             </button>
         </div>
     </div>
@@ -153,7 +178,7 @@
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
                 <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4 ">Reporte General</a>
+                <a href="{{ route('reporte') }}">Reporte General</a>
             </button>
             <button
                 class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
@@ -204,6 +229,13 @@
     const showMenu4 = () => {
         icon4.classList.toggle("rotate-180");
         menu4.classList.toggle("hidden");
+    };
+
+    let icon5 = document.getElementById("icon5");
+    let menu5 = document.getElementById("menu5");
+    const showMenu5 = () => {
+        icon5.classList.toggle("rotate-180");
+        menu5.classList.toggle("hidden");
     };
 
     let Main = document.getElementById("Main");

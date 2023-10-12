@@ -6,6 +6,9 @@ use App\Livewire\Cobranzas;
 use App\Livewire\Evaluacion;
 use App\Livewire\Inicio;
 use App\Livewire\Prestamos;
+use App\Livewire\Productos;
+use App\Livewire\Reporte;
+use App\Livewire\Talleres;
 use App\Livewire\VerEvaluacion;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +61,9 @@ Route::middleware([
     Route::get('/inicio', Inicio::class)->name('inicio');
     Route::get('/reportes', Evaluacion::class)->name('reportes');
     Route::get('/ver-evaluacion', VerEvaluacion::class)->name('ver-evaluacion');
+    Route::get('/talleres', Talleres::class)->name('talleres');
+    Route::get('/reporte', Reporte::class)->name('reporte');
+    Route::get('/productos', Productos::class)->name('productos');
 
 
     /*Route::get('/', [FilesController::class, 'loadView']);

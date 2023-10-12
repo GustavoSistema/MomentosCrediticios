@@ -1,18 +1,16 @@
-<div>
+<div class="mt-8 mx-auto max-w-screen-2xl bg-gray-200 p-6 rounded-md border border-gray-400">
     <div class="mx-8 rounded-md mb-4">
-        <div class="text-xl font-semibold mt-8">
+        <div class="text-xl font-semibold mt-2">
             <h3 style="font-size: 1.5rem; font-weight: bold;">REGISTRO DE EVALUACIÓN</h3>
         </div>
-        <div class="mt-2">
-            <div class="flex bg-gray-200 items-center p-2 rounded-md mb-4">
+        <div class="mt-3">
+            <div class="flex bg-white items-center p-2 rounded-md mb-4">
                 <span>Buscar: </span>
-                <input wire:model.live="search"
+                <input type="text" wire:model.live="search"
                     class="bg-gray-50 mx-2 border-indigo-500 rounded-md outline-none ml-1 w-1/2 truncate">
-                {{--
                 <div class="ml-auto">
                     @livewire('crear-evaluacion')
                 </div>
-                --}}
             </div>
         </div>
     </div>
@@ -30,10 +28,6 @@
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Dni</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Celular</th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
-                            Correo</th>
-                        <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Fecha</th>
                         <th scope="col" class="text-sm font-medium font-semibold text-white px-6 py-4 text-left">
                             Estado</th>
@@ -41,7 +35,7 @@
                             Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white">
                     @foreach ($evaluacion as $evalua)
                         <tr tabindex="0"
                             class="focus:outline-none h-16 border border-slate-300 rounded hover:bg-gray-200">
@@ -71,20 +65,6 @@
                                 <div class="flex items-center">
                                     <p class="text-sm leading-none text-gray-600 ml-2 p-2 bg-green-200 rounded-full">
                                         {{ $evalua->dnicliente }}
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="pl-2">
-                                <div class="flex items-center">
-                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                        {{ $evalua->celular }}
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="pl-2">
-                                <div class="flex items-center">
-                                    <p class="text-sm font-medium leading-none text-gray-600 mr-2">
-                                        {{ $evalua->email }}
                                     </p>
                                 </div>
                             </td>
@@ -281,20 +261,6 @@
                 <x-label value="DNI del cliente" />
                 <x-input wire:model="dnicliente" class="w-full" />
                 @error('dnicliente')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <x-label value="Número de celular" />
-                <x-input wire:model="celular" class="w-full" />
-                @error('celular')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <x-label value="Correo electrónico" />
-                <x-input wire:model="email" class="w-full" />
-                @error('email')
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
             </div>

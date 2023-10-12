@@ -16,8 +16,6 @@ class Evalua extends Model
         'nomcliente',
         'apecliente',
         'dnicliente',
-        'celular',
-        'email',
         'fecha',
         'estado',
     ];

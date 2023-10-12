@@ -39,16 +39,6 @@
                 <x-input wire:model="dnicliente" type="text" id="dnicliente" class="w-full" />
                 <x-input-error for="dnicliente" />
             </div>
-            <div class="mb-4">
-                <x-label value="Celular:" />
-                <x-input wire:model="celular" type="text" id="celular" class="w-full" />
-                <x-input-error for="celular" />
-            </div>
-            <div class="mb-4">
-                <x-label value="Correo:" />
-                <x-input wire:model="email" type="email" id="email" class="w-full" />
-                <x-input-error for="email" />
-            </div>
             <div class="flex space-x-2">
                 <div class="w-1/2">
                     <x-label value="Fecha:" />
