@@ -23,6 +23,7 @@
 
             <a href="{{ route('inicio') }}">Inicio</a>
         </button>
+        {{--
         <button
             class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
             <svg class="fill-stroke" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -63,6 +64,7 @@
             </svg>
             <p class="text-base leading-4 ">Roles y Permisos</p>
         </button>
+        --}}
     </div>
 
     <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
@@ -198,6 +200,48 @@
         </div>
     </div>
 
+    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+        <button onclick="showMenu6(true)"
+            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="text-sm leading-5  uppercase">USUARIOS</p>
+            <svg id="icon6" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div id="menu6" class="hidden flex justify-start flex-col items-start pb-5 ">
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                <i class="fa-solid fa-user"></i>
+                <a href="{{ route('usuarios') }}">Usuarios</a>
+            </button>
+        </div>
+    </div>
+    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+        <button onclick="showMenu7(true)"
+            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+            <p class="text-sm leading-5  uppercase">ROLES</p>
+            <svg id="icon7" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div id="menu7" class="hidden flex justify-start flex-col items-start pb-5 ">
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                <i class="fa-solid fa-key"></i>
+                <a href="{{ route('admin-roles') }}">Roles</a>
+            </button>
+            <button
+                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                <i class="fa-solid fa-address-book"></i>
+                <a href="{{ route('admin-permisos') }}">Permisos</a>
+            </button>
+        </div>
+    </div>
+
     
 </div>
 
@@ -236,6 +280,18 @@
     const showMenu5 = () => {
         icon5.classList.toggle("rotate-180");
         menu5.classList.toggle("hidden");
+    };
+    let icon6 = document.getElementById("icon6");
+    let menu6 = document.getElementById("menu6");
+    const showMenu6 = () => {
+        icon6.classList.toggle("rotate-180");
+        menu6.classList.toggle("hidden");
+    };
+    let icon7 = document.getElementById("icon7");
+    let menu7 = document.getElementById("menu7");
+    const showMenu7 = () => {
+        icon7.classList.toggle("rotate-180");
+        menu7.classList.toggle("hidden");
     };
 
     let Main = document.getElementById("Main");

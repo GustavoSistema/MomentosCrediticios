@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FilesController;
+use App\Livewire\AdminPermisos;
+use App\Livewire\AdminRoles;
 use App\Livewire\Clientes;
 use App\Livewire\Cobranzas;
 use App\Livewire\Evaluacion;
@@ -9,6 +11,7 @@ use App\Livewire\Prestamos;
 use App\Livewire\Productos;
 use App\Livewire\Reporte;
 use App\Livewire\Talleres;
+use App\Livewire\Usuarios;
 use App\Livewire\VerEvaluacion;
 use Illuminate\Support\Facades\Route;
 
@@ -51,19 +54,25 @@ Route::middleware([
     })->name('dashboard');
 
 
+    Route::get('/inicio', Inicio::class)->name('inicio');
+    // evaluacion
+    Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
+    Route::get('/ver-evaluacion', VerEvaluacion::class)->name('ver-evaluacion');
+    // prestamos
     Route::get('/clientes', Clientes::class)->name('clientes');
-
     Route::get('/clientes', Clientes::class)->middleware('can:admin.clientes')->name('admin.clientes');
-
     Route::get('/prestamos', Prestamos::class)->middleware('can:admin.prestamos')->name('admin.prestamos');
     Route::get('/cobranzas', Cobranzas::class)->name('cobranzas');
-    Route::get('/evaluacion', Evaluacion::class)->name('evaluacion');
-    Route::get('/inicio', Inicio::class)->name('inicio');
-    Route::get('/reportes', Evaluacion::class)->name('reportes');
-    Route::get('/ver-evaluacion', VerEvaluacion::class)->name('ver-evaluacion');
+    //tablas
     Route::get('/talleres', Talleres::class)->name('talleres');
-    Route::get('/reporte', Reporte::class)->name('reporte');
-    Route::get('/productos', Productos::class)->name('productos');
+    Route::get('/productos', Productos::class)->name('productos'); 
+    //reportes    
+    Route::get('/reportes', Evaluacion::class)->name('reportes');   
+    Route::get('/reporte', Reporte::class)->name('reporte');     
+    //usuarios y roles 
+    Route::get('/admin-permisos', AdminPermisos::class)->name('admin-permisos');
+    Route::get('/admin-roles', AdminRoles::class)->name('admin-roles');
+    Route::get('/usuarios', Usuarios::class)->name('usuarios');
 
 
     /*Route::get('/', [FilesController::class, 'loadView']);
