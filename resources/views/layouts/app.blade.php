@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo3.png') }}" />
+    <title>MOMENTOS CREDITICIOS</title>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -146,7 +148,9 @@
         toggleMenuButton.addEventListener('click', toggleMenu);
     </script>
 
-
+<div class="text-xs text-slate-700 -mt-4 float-right">
+    Powered by GHFDEV ®
+</div>
 </body>
 
 </html>

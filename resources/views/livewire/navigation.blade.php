@@ -1,6 +1,5 @@
-<div
-    class="menu sidebar absolute top-16 left-0 xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-500 flex-col hidden z-20">
 
+<div class="menu sidebar resizable top-16 left-0 xl:rounded-r transform xl:translate-x-0 ease-in-out transition duration-500 flex justify-start items-start h-full w-full sm:w-64 bg-gray-500 flex-col hidden z-20">
     <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
     <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-3 pb-5 ">
         <button
@@ -67,182 +66,191 @@
         --}}
     </div>
 
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+    @hasrole('admin|taller|supervisor')
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
 
-        <button onclick="showMenu1(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Evaluación</p>
-            <svg id="icon1" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu1" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-user-plus"></i>
-                <a href="{{ route('evaluacion') }}">Crear Evaluación</a>
+            <button onclick="showMenu1(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5 uppercase">Evaluación</p>
+                <svg id="icon1" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-user-pen"></i>
-                <a href="{{ route('ver-evaluacion') }}">Ver Evaluación</a>
-            </button>
-        </div>       
-    </div>
-
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
-        <button onclick="showMenu2(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Prestamos</p>
-            <svg id="icon2" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu2" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-user-plus"></i>
-                <a href="{{ route('admin.clientes') }}">Crear Cliente</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-sharp fa-solid fa-landmark"></i>
-                <a href="{{ route('admin.prestamos') }}">Préstamos</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fas fa-dollar-sign"></i>
-                <a href="{{ route('cobranzas') }}">Cobranzas</a>
-            </button>
+            <div id="menu1" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <a href="{{ route('admin.evaluacion') }}">Crear Evaluación</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <a href="{{ route('admin.ver-evaluacion') }}">Ver Evaluación</a>
+                </button>
+            </div>
         </div>
-    </div>
+    @endhasrole
 
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
-
-        <button onclick="showMenu4(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">Credito</p>
-            <svg id="icon4" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu4" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-ticket"></i>
-                <a href="{{ route('inicio') }}">Ver Credito</a>
+    @hasrole('admin|supervisor')
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+            <button onclick="showMenu2(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5 uppercase">Prestamos</p>
+                <svg id="icon2" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
+            <div id="menu2" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <a href="{{ route('admin.clientes') }}">Crear Cliente</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-sharp fa-solid fa-landmark"></i>
+                    <a href="{{ route('admin.prestamos') }}">Préstamos</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fas fa-dollar-sign"></i>
+                    <a href="{{ route('admin.cobranzas') }}">Cobranzas</a>
+                </button>
+            </div>
         </div>
-    </div>
+    @endhasrole
 
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+    @hasrole('admin|supervisor|cliente')
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
 
-        <button onclick="showMenu5(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5 uppercase">TABLAS</p>
-            <svg id="icon5" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu5" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-car"></i>
-                <a href="{{ route('talleres') }}">Talleres</a>
+            <button onclick="showMenu4(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5 uppercase">Credito</p>
+                <svg id="icon4" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
-                <i class="fa-solid fa-toolbox"></i>
-                <a href="{{ route('productos') }}">Productos</a>
-            </button>
+            <div id="menu4" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-ticket"></i>
+                    <a href="{{ route('inicio') }}">Ver Credito</a>
+                </button>
+            </div>
         </div>
-    </div>
+    @endhasrole
 
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
-        <button onclick="showMenu3(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5  uppercase">REPORTES</p>
-            <svg id="icon3" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu3" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a href="{{ route('reporte') }}">Reporte General</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Deudas</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Pagos Completos</a>
-            </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-chart-column"></i>
-                <a class="text-base leading-4  ">Pagos Pendientes</a>
-            </button>
-        </div>
-    </div>
+    @hasrole('admin|supervisor')
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
 
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
-        <button onclick="showMenu6(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5  uppercase">USUARIOS</p>
-            <svg id="icon6" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu6" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-user"></i>
-                <a href="{{ route('usuarios') }}">Usuarios</a>
+            <button onclick="showMenu5(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5 uppercase">TABLAS</p>
+                <svg id="icon5" class="transform rotate-180" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
+            <div id="menu5" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-car"></i>
+                    <a href="{{ route('admin.talleres') }}">Talleres</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-full md:w-52">
+                    <i class="fa-solid fa-toolbox"></i>
+                    <a href="{{ route('admin.productos') }}">Productos</a>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
-        <button onclick="showMenu7(true)"
-            class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
-            <p class="text-sm leading-5  uppercase">ROLES</p>
-            <svg id="icon7" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-        </button>
-        <div id="menu7" class="hidden flex justify-start flex-col items-start pb-5 ">
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-key"></i>
-                <a href="{{ route('admin-roles') }}">Roles</a>
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+            <button onclick="showMenu3(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5  uppercase">REPORTES</p>
+                <svg id="icon3" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
-            <button
-                class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
-                <i class="fa-solid fa-address-book"></i>
-                <a href="{{ route('admin-permisos') }}">Permisos</a>
-            </button>
+            <div id="menu3" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <a href="{{ route('inicio') }}">Reporte General</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <a href="{{ route('inicio') }}">Deudas</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 w-52">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <a href="{{ route('inicio') }}">Pagos Completos</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <a href="{{ route('inicio') }}">Pagos Pendientes</a>
+                </button>
+            </div>
         </div>
-    </div>
+    @endhasrole
 
-    
+    @hasrole('admin')
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+            <button onclick="showMenu6(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5  uppercase">USUARIOS</p>
+                <svg id="icon6" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <div id="menu6" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-user"></i>
+                    <a href="{{ route('admin.usuarios') }}">Usuarios</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+            <button onclick="showMenu7(true)"
+                class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14  ">
+                <p class="text-sm leading-5  uppercase">ROLES</p>
+                <svg id="icon7" class="rotate-180 transform" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <div id="menu7" class="hidden flex justify-start flex-col items-start pb-5 ">
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-key"></i>
+                    <a href="{{ route('admin.admin-roles') }}">Roles</a>
+                </button>
+                <button
+                    class="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-52">
+                    <i class="fa-solid fa-address-book"></i>
+                    <a href="{{ route('admin.admin-permisos') }}">Permisos</a>
+                </button>
+            </div>
+        </div>
+    @endhasrole
+
 </div>
 
 
@@ -305,3 +313,25 @@
         close.classList.toggle("hidden");
     };
 </script>
+
+
+<script>
+    const resizable = document.querySelector('.resizable');
+    let isResizing = false;
+ 
+    resizable.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        let startX = e.pageX;
+        let startWidth = parseFloat(getComputedStyle(resizable, null).width);
+ 
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            let newWidth = startWidth + (e.pageX - startX);
+            resizable.style.width = newWidth + 'px';
+        });
+ 
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+    });
+ </script>

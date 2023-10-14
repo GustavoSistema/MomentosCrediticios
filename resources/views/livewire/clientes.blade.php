@@ -119,7 +119,7 @@
                                             Editar
                                         </span>
                                     </a>
-                                    @can('admin.prestamos')
+                                    
                                     <a wire:click="delete({{ $cliente->id }})"
                                         class="group py-4 px-4 text-center rounded-md bg-red-300 font-bold text-white cursor-pointer hover:bg-red-400  hover:animate-pulse">
                                         <i class="fas fa-trash"></i>
@@ -128,7 +128,7 @@
                                             Eliminar
                                         </span>
                                     </a>
-                                    @endcan
+                                    
                                 </div>
                             </td>
                         </tr>

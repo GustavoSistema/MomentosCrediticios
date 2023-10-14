@@ -27,8 +27,9 @@ class CreatePermiso extends Component
     public function crearPermiso(){
         $this->validate();
         $permiso=Permission::create(["name"=>$this->nombre,"descripcion"=>$this->descripcion,"guard_name"=>"web"]);
-        $this->emitTo("admin-permisos","render");
-        $this->reset(["nombre","descripcion","open"]);
-        $this->emit("minAlert", ["titulo" => "¡BUEN TRABAJO!", "mensaje" => "Permiso creado Correctamente", "icono" => "success"]); 
+        //$this->emitTo("admin-permisos","render");
+        $this->reset(["nombre", "descripcion", "open"]);
+        $this->dispatch('render');
+        $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'Se creo correctamente el Permiso.', 'icono' => 'success']);
     }
 }
