@@ -13,25 +13,22 @@ class Usuarios extends Component
 {
     use WithFileUploads;
     use WithPagination;
+    
 
-    public $sort,$direction,$cant,$search,$name,$email;
-
+    public $sort,$direction,$cant,$search,$name,$email, $firma;
     public $selectedRoles=[];
     public $roles;
-
     public $editando=false;
+    public $usuario;
 
-    public $usuario,$firma;
-
-    protected $rules=[
+    public $rules=[
         "name"=>"required|string",
         "email"=>"required|email",
-        //"usuario.celular"=>"nullable|digits:9",
-        //"firma"=>"nullable|image",
         "selectedRoles"=>"array|min:1",
     ];
     
     public function mount(){
+        $this->roles=Roles::all();
         $this->direction='desc';
         $this->sort='id';       
         $this->cant=10;
@@ -84,7 +81,7 @@ class Usuarios extends Component
         $this->usuario->email = $this->email; 
         $this->usuario->save();
         $this->usuario->syncRoles($this->selectedRoles);
-        $this->usuario=User::make();
+        //$this->usuario=User::make();
         $this->reset(["editando"]);   
         $this->dispatch('render');
         $this->dispatch('CustomAlert', ['titulo' => 'Bien Hecho', 'mensaje' => 'Se actualizó correctamente el Usuario.', 'icono' => 'success']);
@@ -92,10 +89,10 @@ class Usuarios extends Component
     }
 
     public function editarUsuario(User $usuario){
-        $this->usuario=$usuario;  
-        $this->name = $usuario->name; 
-        $this->email = $usuario->email;              
-        $this->roles=Roles::all();
+        
+        $this->usuario=$usuario;
+        $this->name=$usuario->name;         
+        $this->email=$usuario->email;
         $this->selectedRoles=$usuario->Roles->pluck('name')->all();
         $this->editando=true;
     }

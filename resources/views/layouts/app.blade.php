@@ -21,9 +21,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!--para el menu-->
-    <script src="{{ asset('js/menu.js') }}"></script>
-
     <!-- Styles -->
     @livewireStyles
 </head>

@@ -108,7 +108,7 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <div class="flex items-center justify-center">
                                     <p class="text-gray-900 whitespace-no-wrap">
-                                        <button wire:click="editarUsuario({{ $item->id }})"
+                                        <button wire:click="editarUsuario({{ $item->id}})"
                                             class="px-2 py-2 bg-indigo-600 rounded-md flex items-center justify-center">
                                             <i class="fas fa-pen text-white"></i>
                                         </button>
@@ -154,12 +154,6 @@
                 <x-input wire:model="email" type="text" class="w-full" />
                 <x-input-error for="email" />
             </div>
-            @if (isset($usuario->rutaFirma) && $firma == null)
-                <div class="w-5/6 m-auto py-4">
-                    <img class="h-auto max-w-full m-auto border bg-white p-1 rounded-md shadow-md"
-                        src="{{ Storage::url($usuario->rutaFirma) }}" alt="FirmaInspector-{{ $usuario->id }}">
-                </div>
-            @endif
             <div class="mb-4">
                 <x-label value="Roles:" />
                 @if (isset($roles))
