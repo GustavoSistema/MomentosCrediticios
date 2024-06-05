@@ -30,15 +30,41 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return redirect()->to('/login');
+});*/
+
+
+//Rutas para los archivos html de la pagina web
+
+Route::get('/', function () {
+    return view('index'); 
+});
+Route::get('index', function () {
+    return view('index'); 
+});
+Route::get('home', function () {
+    return view('home'); 
+});
+Route::get('about', function () {
+    return view('about'); 
 });
 
-Route::get('phpmyinfo', function () {
-        phpinfo();
-    })->name('phpmyinfo');
-    
+Route::get('services', function () {
+    return view('services'); 
+});
+Route::get('new', function () {
+    return view('new'); 
+});
+Route::get('contact', function () {
+    return view('contact'); 
+});
 
+
+
+Route::get('phpmyinfo', function () {
+    phpinfo();
+})->name('phpmyinfo');
 
 Route::middleware([
     'auth:sanctum',
@@ -48,9 +74,6 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-
-
-        
     })->name('dashboard');
 
 
@@ -70,10 +93,10 @@ Route::middleware([
     Route::get('/talleres', Talleres::class)->name('talleres');
     Route::get('/talleres', Talleres::class)->middleware('can:admin.talleres')->name('admin.talleres');
     Route::get('/productos', Productos::class)->name('productos');
-    Route::get('/productos', Productos::class)->middleware('can:admin.productos')->name('admin.productos'); 
+    Route::get('/productos', Productos::class)->middleware('can:admin.productos')->name('admin.productos');
     //reportes    
-    Route::get('/reportes', Evaluacion::class)->name('reportes');   
-    Route::get('/reporte', Reporte::class)->name('reporte');     
+    Route::get('/reportes', Evaluacion::class)->name('reportes');
+    Route::get('/reporte', Reporte::class)->name('reporte');
     //usuarios y roles 
     Route::get('/admin-permisos', AdminPermisos::class)->name('admin-permisos');
     Route::get('/admin-permisos', AdminPermisos::class)->middleware('can:admin.admin-permisos')->name('admin.admin-permisos');
@@ -81,10 +104,9 @@ Route::middleware([
     Route::get('/admin-roles', AdminRoles::class)->middleware('can:admin.admin-roles')->name('admin.admin-roles');
     Route::get('/usuarios', Usuarios::class)->name('usuarios');
     Route::get('/usuarios', Usuarios::class)->middleware('can:admin.usuarios')->name('admin.usuarios');
-    
+
 
     /*Route::get('/', [FilesController::class, 'loadView']);
     Route::post('/', [FilesController::class, 'storeFile']);
     Route::get('/descargar/{name}', [FilesController::class, 'downloadFile'])->name('download');*/
-
- });
+});
